@@ -1,0 +1,30 @@
+.centure_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    background-image: url("../assets/centure_background.svg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: .8em 10px;
+    box-sizing: border-box;
+}
+
+.centure_div img {
+    margin-left: 8px;
+    width: 30px;
+}
+
+.centure_div h2 {
+    font-size: 14px;
+    color: #ffffff;
+    margin: 0;
+}
+
+@media (max-width: 480px) {
+    .centure_div {
+        padding: .8em 10px;
+    }
+}

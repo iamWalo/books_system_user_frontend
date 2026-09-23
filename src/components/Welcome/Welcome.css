@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
+@media (max-width: 480px) {
+  .welcome-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 480px;
+
+    padding: 20px 16px;
+    box-sizing: border-box;
+  }
+
+  /* Reserved Image Container */
+  .welcome-image-wrapper {
+    z-index: 2;
+    position: relative;
+    width: 220px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    margin-bottom: -35px;
+    /* Pulls the owl down over the purple card */
+    bottom: -2em;
+    left: -0.7em;
+  }
+
+  .welcome-title {
+    font-size: 16px;
+  }
+
+  .welcome-owl-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* Main Purple Card */
+  .welcome-card {
+    position: relative;
+    z-index: 133;
+    background-position: center;
+    background-size: cover;
+    background-color: var(--primary-color);
+    border-top: 2px solid var(--secondary-color);
+    border-bottom: 2px solid var(--secondary-color);
+    border-left: 2px dashed var(--secondary-color);
+    border-right: 2px dashed var(--secondary-color);
+    padding: 45px 20px 24px 20px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Yellow Bordered Badge Title */
+  .welcome-badge {
+    position: absolute;
+    top: -18px;
+    background-color: #431c53;
+    border: 2px dashed var(--secondary-color);
+    padding: 6px 14px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .welcome-badge h2 {
+    color: var(--secondary-color);
+  }
+
+  /* Content Text */
+  .welcome-description {
+    color: #e2d9f3;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+    margin: 10px 0 20px 0;
+  }
+
+  /* Action Link */
+  .welcome-link {
+
+    align-self: center;
+    color: var(--secondary-color);
+    font-weight: 700;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .welcome-link .arrow {
+    font-size: 1.1rem;
+  }
+
+  .welcome-link h3 {
+    color: var(--secondary-color);
+  }
+}

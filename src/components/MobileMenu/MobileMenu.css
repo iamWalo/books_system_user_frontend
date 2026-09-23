@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=Manrope:wght@800&display=swap');
+
+/* Dark backdrop */
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  display: flex;
+}
+
+/* Drawer sliding/opening container */
+.mobile-menu-drawer {
+  width: 70%;
+  max-width: 320px;
+  height: 100%;
+  background-color: #ffffff;
+  padding: 24px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 4px 0 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Close Button Icon */
+.menu-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--primary-color, #3b1747);
+  align-self: flex-end;
+  cursor: pointer;
+  padding: 4px;
+  margin-bottom: 24px;
+}
+
+/* Menu Nav & Items */
+.menu-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-nav li {
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+}
+
+.menu-nav a {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #000000;
+  opacity: 0.66; /* 66% opacity for unselected */
+  text-decoration: none;
+  display: block;
+  padding: 12px 0;
+  transition: opacity 0.2s ease;
+}
+
+/* Selected item state */
+.menu-nav a.active {
+  opacity: 1; /* 100% opacity for selected */
+}
+
+/* CTA Button */
+.menu-amazon-btn {
+  margin-top: 32px;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800; /* Extra bold */
+  font-size: 14px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 4px;
+  transition: opacity 0.2s ease;
+}
+
+.menu-amazon-btn:hover {
+  opacity: 0.9;
+}
+
+.btn-icon {
+  font-size: 14px;
+}

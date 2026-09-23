@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+/* Note: Weiss Antiqua is a custom/commercial font and is not available on Google Fonts. 
+   Ensure 'Weiss Antiqua' is loaded locally or via @font-face in your project. */
+
+/* Main Container without outer margins */
+.faq-container {
+  width: 100%;
+  max-width: 480px;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Section Title */
+.faq-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 0;
+}
+
+.faq-header .diamond-icon {
+  color: #3b1747;
+  font-size: 0.85rem;
+}
+
+.faq-header h2 {
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Accordion List */
+.faq-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* FAQ Item Row */
+.faq-item {
+  border-bottom: 1px solid #1a1a1a;
+  width: 100%;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.faq-item.active {
+  background-color: #fdfbf2;
+  /* Cream background for expanded question */
+  border-bottom: none;
+}
+
+/* Question Trigger Box */
+.faq-question-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  cursor: pointer;
+}
+
+/* Question Typography - Weiss Antiqua Bold 10px */
+.faq-question {
+  font-family: 'Fraunces', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #272727c9;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.faq-item.active .faq-question {
+  color: #3b1747;
+  /* Purple text for active state */
+}
+
+.faq-arrow {
+  color: #555555;
+  font-size: 0.65rem;
+  margin-left: 10px;
+}
+
+.faq-item.active .faq-arrow {
+  color: #3b1747;
+}
+
+/* Answer Body */
+.faq-answer-box {
+  padding: 0 16px 16px 16px;
+}
+
+/* Answer Typography - Poppins Medium 9px */
+.faq-answer {
+  font-family: "Manrope", sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  color: #666666;
+  line-height: 1.55;
+  margin: 0;
+}

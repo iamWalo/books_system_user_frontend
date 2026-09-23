@@ -1,0 +1,29 @@
+.header-container {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+    padding: .6em 10px .1em 10px;
+    background-color: #ffffff;
+    box-sizing: border-box;
+}
+
+.header-container .header-logo {
+    width: 120px;
+}
+
+.header-container .menu-icon-btn,
+.header-container .search-icon-btn {
+    color: #48215A;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 480px) {
+    .header-container {
+        padding: .6em 10px .1em 10px;
+    }
+}

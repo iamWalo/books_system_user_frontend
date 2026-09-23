@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Manrope:wght@200..800&display=swap');
+
+:root {
+  /* Colors */
+  --primary-color: #48215A;
+  --secondary-color: #FDB00A;
+  --tertiary-color: #F5F5F5;
+  --quaternary-color: #393838;
+  --color-purple-topbar: #381a52;
+  --color-bg-light: #f9f9fb;
+  --color-card-bg-light-green: #f3f9f3;
+  --color-card-bg-light-blue: #f2f6fc;
+  --color-card-bg-light-pink: #fbf2f8;
+  --color-text-dark: #1e1e1e;
+  --color-text-muted: #8E8E8E;
+  --color-white: #ffffff;
+
+  /* Typography Fonts */
+  --font-heading: "Fraunces", serif;
+  --font-body: "Manrope", sans-serif;
+
+  /* Strict Allowed Font Sizes */
+  --fs-hero: 64px;
+  --fs-large: 16px;
+  --fs-base: 14px;
+  --fs-small: 12px;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Border Radiuses */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+}
+
+/* Locking the entire viewport */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  /* 14px default */
+  background-color: var(--color-bg-light);
+  color: var(--color-text-dark);
+}
+
+img.hero_line {
+  position: relative;
+  top: -10px;
+}
+
+/* Global Font Styles restricted strictly to 64px, 16px, 14px, 12px */
+h1 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-hero);
+  /* 64px */
+  font-weight: 800;
+  margin: 0;
+}
+
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-large);
+  /* 16px */
+  font-weight: 600;
+  margin: 0;
+}
+
+h3 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--fs-base);
+  /* 14px */
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+h4 {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  /* 12px */
+  color: var(--color-text-muted);
+  font-weight: 500;
+  margin: 0;
+}
+
+section {
+  margin: 80px 0;
+}

@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=Manrope:wght@500&display=swap');
+
+@media (max-width: 480px) {
+
+  /* Mobile-focused, single-column section */
+  .bestselling-container {
+    width: 100%;
+    max-width: 480px;
+    padding: 24px 16px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Header Section */
+  .bestselling-header {
+    display: block;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  /* .bestselling-header .diamond-icon {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+  } */
+
+  .bestselling-header h2 {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .categories-header p {
+    color: #8E8E8E;
+    font-weight: 500;
+  }
+
+  /* Vertical Stack (1 Card Per Row) */
+  .bestselling-list {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    width: 100%;
+  }
+
+  /* Individual Card */
+  .bestselling-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  /* Image Wrapper */
+  .bestselling-image-wrapper {
+    width: 100%;
+    max-width: 280px;
+    /* Constrains card width for balanced mobile presentation */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .bestselling-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  /* Typography Details */
+  .bestselling-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin: 0 0 4px 0;
+    line-height: 1.2;
+  }
+
+  .bestselling-subtitle {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    color: #7d7285;
+    margin: 0;
+    line-height: 1.3;
+  }
+}

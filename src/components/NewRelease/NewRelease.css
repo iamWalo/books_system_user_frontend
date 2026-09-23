@@ -1,0 +1,100 @@
+@media (max-width: 480px) {
+
+  /* Direct Mobile Layout - Applied Always */
+  .new-release-container {
+    width: 100%;
+    max-width: 480px;
+
+    padding: 24px 16px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: serif;
+    /* Matches book title serif typography */
+  }
+
+  /* Title Section */
+  .new-release-header {
+    display: block;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .diamond-icon {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+  }
+
+  .new-release-header h2 {
+    color: var(--primary-color);
+    margin: 0;
+    margin-bottom: 5px;
+  }
+
+
+  /* 2-Column Grid Layout */
+  .books-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 12px;
+    width: 100%;
+  }
+
+  /* Individual Card */
+  .book-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Spans the 3rd book across both columns and centers it */
+  .book-card.centered-card {
+    grid-column: 1 / -1;
+    width: 50%;
+    justify-self: center;
+  }
+
+  /* Cream Background Box for Image */
+  .image-card-box {
+    border-radius: 12px;
+    padding: 16px 12px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+
+  .book-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0px 6px 10px rgba(0, 0, 0, 0.15));
+  }
+
+  /* Typography Details */
+  .book-title {
+    color: var(--primary-color);
+    /* font-size: 0.85rem; */
+    font-weight: 600;
+    margin: 0 0 4px 0;
+  }
+
+  .book-subtitle {
+    color: #7d7285;
+    font-size: 11px;
+    margin: 0 0 6px 0;
+  }
+
+  .book-price {
+    color: var(--primary-color);
+    font-size: 14px;
+    font-weight: 600;
+  }
+}

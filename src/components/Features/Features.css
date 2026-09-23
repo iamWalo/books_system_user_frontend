@@ -1,0 +1,21 @@
+@media (max-width: 480px) {
+    section.features {
+        display: block;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    section.features h2 {
+        margin-bottom: 30px;
+    }
+
+    .freatures_img_container {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        height: 77px;
+        padding: 0 25px;
+        background-color: #fdb00a2c;
+    }
+}

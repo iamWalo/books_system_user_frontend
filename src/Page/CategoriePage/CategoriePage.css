@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,100..900&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --primary-color: #48215A;
+  --secondary-color: #FDB00A;
+  --tertiary-color: #F5F5F5;
+  --quaternary-color: #393838;
+}
+
+/* Locking the entire viewport */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  overflow-x: hidden;
+  background-color: #ffffff;
+}
+
+/* Global Font Declarations */
+h2 {
+  font-family: "Fraunces", serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin: 0;
+}
+
+h3 {
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  color: #000000;
+  margin: 0;
+}
+
+h4 {
+  font-family: "Manrope", sans-serif;
+  font-size: 10px;
+  color: #8E8E8E;
+  font-weight: 500;
+  margin: 0;
+}
+
+p {
+  font-family: "Manrope", sans-serif;
+  margin: 0;
+}
+
+section {
+  margin: 40px 0;
+}
+
+/* Base Layout Container */
+.category-page-container {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* Top Announcement Banner */
+.top-banner {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  text-align: center;
+  padding: 6px 0;
+  font-family: "Manrope", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+  padding: 12px 16px;
+  font-family: "Manrope", sans-serif;
+  font-size: 12px;
+  color: #8E8E8E;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.crumb-icon {
+  font-size: 10px;
+  color: var(--primary-color);
+}
+
+/* Hero Section Banner */
+.hero-banner {
+  margin: 0 16px 20px 16px;
+  height: 157px;
+  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../assets/categories_hero_img.svg');
+  background-size: cover;
+  background-position: center;
+  border-radius: 6px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.hero-content h2 {
+  color: #ffffff;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+}
+
+.hero-content h4 {
+  color: #dcdcdc;
+
+  margin-top: 2px;
+}
+
+.sort-dropdown {
+  background-color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: "Manrope", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.dropdown-arrow {
+  font-size: 7px;
+}
+
+/* Books Grid (2 Columns) */
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 14px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.book-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.book-image-wrapper {
+  width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+  margin-bottom: 8px;
+}
+
+.book-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.book-card h3 {
+  font-family: "Fraunces", serif;
+  /* Override to match serif title on cards */
+  color: var(--primary-color);
+  line-height: 1.2;
+  margin-bottom: 3px;
+}
+
+/* .book-card h4 {
+    font-size: 12px;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  } */
+
+.book-price {
+  margin-top: 5px;
+  color: var(--primary-color);
+}
+
+/* CTA Buttons */
+.cta-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px 16px 0 16px;
+}
+
+.cta-btn {
+  width: 100%;
+  padding: 14px 0;
+  border-radius: 4px;
+  border: none;
+  font-family: "Manrope", sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.secondary-btn {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+.primary-btn {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+/* Other Categories Section */
+.other-categories-section {
+  text-align: center;
+}
+
+.other-categories-section h2 {
+  margin-bottom: 25px;
+}
