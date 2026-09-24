@@ -34,6 +34,14 @@
     margin: 0 0 4px 0;
   }
 
+  .categories-read-more {
+    display: inline-block;
+    margin-top: 8px;
+    color: #3b1747;
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
   /* Grid Layout - 2 Cards per Row */
   .categories-list {
     display: grid;
@@ -59,6 +67,7 @@
     left: 0;
     width: 100%;
     height: 100%;
+    text-decoration: none;
     z-index: 1;
   }
 

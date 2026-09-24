@@ -43,7 +43,7 @@ const Faq = () => {
   };
 
   return (
-    <section className="faq-container">
+    <section id="faq" className="faq-container">
       {/* Title */}
       <div className="faq-header">
         {/* <span className="diamond-icon"><img src="../assets/newrelease_logo.svg" alt="" /></span> */}
@@ -55,12 +55,12 @@ const Faq = () => {
         {faqData.map((item) => {
           const isOpen = openId === item.id;
           return (
-            <div 
-              key={item.id} 
+            <div
+              key={item.id}
               className={`faq-item ${isOpen ? 'active' : ''}`}
             >
-              <div 
-                className="faq-question-box" 
+              <div
+                className="faq-question-box"
                 onClick={() => toggleFaq(item.id)}
               >
                 <h3 className="faq-question">{item.question}</h3>

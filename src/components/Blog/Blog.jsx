@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './Blog.css';
 import blog1_img from '../../assets/blog_section_img.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -122,7 +123,9 @@ const Blogs = () => {
               <div className="blog-content">
                 <h3>{blog.title}</h3>
                 <p>{blog.description}</p>
-                <h4>Read More</h4>
+                <Link to="/blogs" className="blog-read-more">
+                  <h4>Read More</h4>
+                </Link>
               </div>
             </div>
           ))}

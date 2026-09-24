@@ -79,13 +79,13 @@
 }
 
 .filter-btn {
-    background-color: #faf8f5;
+    background-color: #FDB00A0F;
     border: 1px solid #dcd5c9;
-    border-radius: var(--radius-sm, 6px);
+    /* border-radius: var(--radius-sm, 6px); */
     padding: 10px var(--spacing-xs, 4px);
-    font-family: var(--font-heading, "Fraunces", serif);
+    font-family: var(--font-heading);
     font-size: var(--fs-small, 12px);
-    color: #333333;
+    color: var(--primary-color);
     cursor: pointer;
     text-align: center;
     white-space: nowrap;
@@ -94,7 +94,7 @@
 
 .filter-btn:hover,
 .filter-btn.active {
-    background-color: #f1e9dc;
+    background-color: #fdb00a18;
     border-color: #bfae98;
 }
 
@@ -143,7 +143,7 @@
 
 .blog-card {
     position: relative;
-    min-height: 263px;
+    min-height: 477px;
     background-image: url('../../assets/blog_section_img.svg');
     background-position: center;
     background-size: cover;

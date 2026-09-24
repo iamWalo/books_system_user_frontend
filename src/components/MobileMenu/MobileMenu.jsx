@@ -13,7 +13,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
     { name: 'All Categories', path: '/all-categories' },
     { name: 'Series', path: '/series' },
     // { name: 'Products', path: '/products' },
-    { name: 'FAQs', path: '/faqs' },
+    { name: 'FAQs', path: '/#faq' },
     { name: 'Blogs', path: '/blogs' },
   ];
 

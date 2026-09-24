@@ -106,46 +106,7 @@ const AllCategoriesPage = ({ categoriesData }) => {
             </main>
 
             {/* Footer */}
-            <footer className="all-categories-footer">
-                <div className="footer-top-container">
-                    <div className="footer-brand">
-                        <div className="footer-brand-logo-q">?</div>
-                        <div className="footer-brand-text">
-                            <h3>WhyQuest</h3>
-                            <p>Curious Minds Start Here!</p>
-                        </div>
-                    </div>
 
-                    <div className="footer-nav-columns">
-                        <div className="footer-column">
-                            <h4>Explore</h4>
-                            <ul>
-                                <li>Our Story</li>
-                                <li>Categories</li>
-                                <li>Books</li>
-                            </ul>
-                        </div>
-                        <div className="footer-column">
-                            <h4>For You</h4>
-                            <ul>
-                                <li>Contact Us</li>
-                                <li>Privacy Policy</li>
-                                <li>Newsletter</li>
-                            </ul>
-                        </div>
-                        <div className="footer-column">
-                            <h4>Shop</h4>
-                            <ul>
-                                <li>Amazon</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="footer-bottom">
-                    © 2026 WHYQUEST PUBLISHING — ALL RIGHTS RESERVED
-                </div>
-            </footer>
         </div>
     );
 };

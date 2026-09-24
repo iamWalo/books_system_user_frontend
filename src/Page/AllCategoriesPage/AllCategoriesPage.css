@@ -74,11 +74,12 @@
 
 /* Category Outer Card */
 .category-section-wrapper {
-    border-radius: var(--radius-lg, 14px);
+    /* border-radius: var(--radius-lg, 14px); */
+    border-radius: 12px 12px 0 0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    border: 1px solid rgba(0, 0, 0, 0.04);
+    /* border: 1px solid rgba(0, 0, 0, 0.04); */
 }
 
 /* Dynamic Container Background Colors matching design */
@@ -200,7 +201,7 @@
 .book-card-image-wrapper {
     width: 100%;
     aspect-ratio: 3 / 4;
-    border-radius: 8px;
+    /* border-radius: 8px; */
     overflow: hidden;
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
     margin-bottom: 8px;

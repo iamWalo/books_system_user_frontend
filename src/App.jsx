@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import Hero from './components/Hero/Hero.jsx'
@@ -17,6 +17,7 @@ import './App.css'
 import ProductPage from './Page/ProductPage/ProductPage.jsx'
 import { BlogsPage } from './Page/BlogsPage/BlogsPage.jsx'
 import PageLayout from './components/PageLayout/PageLayout.jsx'
+import { OneBlogPage } from './Page/OneBlogPage/OneBlogPage.jsx'
 
 const Home = () => {
   return (
@@ -35,9 +36,23 @@ const Home = () => {
   )
 }
 
+const ScrollToTopOnLoad = () => {
+  useLayoutEffect(() => {
+    window.history.scrollRestoration = 'manual'
+    window.scrollTo(0, 0)
+
+    return () => {
+      window.history.scrollRestoration = 'auto'
+    }
+  }, [])
+
+  return null
+}
+
 const App = () => {
   return (
     <Router>
+      <ScrollToTopOnLoad />
       <Routes>
         <Route path="/" element={<PageLayout><Home /></PageLayout>} />
         <Route path="/categories" element={<PageLayout breadcrumbItems={['🏠 Home', 'Categories', "Children's Books"]}><CategoriePage /></PageLayout>} />
@@ -45,6 +60,7 @@ const App = () => {
         <Route path="/series" element={<PageLayout breadcrumbItems={['🏠 Home', 'Series', "Children's Books"]}><SeriesPage /></PageLayout>} />
         <Route path="/product" element={<PageLayout breadcrumbItems={['🏠 Home', 'Categories', "Children's Books"]}><ProductPage /></PageLayout>} />
         <Route path="/blogs" element={<PageLayout breadcrumbItems={['🏠 Home', 'Series', "Children's Books"]}><BlogsPage /></PageLayout>} />
+        <Route path="/article" element={<PageLayout breadcrumbItems={['🏠 Home', 'Series', "Children's Books"]}><OneBlogPage /></PageLayout>} />
       </Routes>
     </Router>
   )

@@ -30,6 +30,9 @@
 
 /* Main Yellow Background Card */
 .subscribe-card {
+  background-image: url('../../assets/brend_background_style.svg');
+  background-size: cover;
+  background-position: center;
   background-color: var(--secondary-color);
   width: 100%;
   padding: 25px 20px 25px;

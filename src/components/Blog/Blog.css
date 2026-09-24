@@ -44,10 +44,10 @@
         position: relative;
         width: 220px;
         min-width: 220px;
-        height: 260px;
-        border-radius: 8px;
+        min-height: 511px;
+        /* border-radius: 8px; */
         overflow: hidden;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); */
         flex-shrink: 0;
     }
 
@@ -137,6 +137,12 @@
 
 .blogs-header h2 {
     margin-bottom: 0;
+}
+
+.blog-read-more {
+    color: inherit;
+    pointer-events: auto;
+    text-decoration: none;
 }
 
 /* Arrow Controls - Preserved Exact Layout Positions */

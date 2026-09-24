@@ -50,7 +50,7 @@ const SeriesPage = ({ seriesData }) => {
     const seriesToDisplay = seriesData && seriesData.length > 0 ? seriesData : DEFAULT_SERIES_DATA;
 
     return (
-        <div className="all-categories-page-root">
+        <div className="series-page all-categories-page-root">
             <main className="all-categories-container">
                 {seriesToDisplay.map((series, idx) => {
                     const themeClass = series.theme || (

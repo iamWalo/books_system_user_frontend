@@ -34,7 +34,7 @@
     background-image: url('../../assets/brend_background_style.svg');
     background-position: center;
     background-size: cover;
-    background-color: var(--primary-color);
+    /* background-color: var(--primary-color); */
   }
 
   .welcome-owl-img {

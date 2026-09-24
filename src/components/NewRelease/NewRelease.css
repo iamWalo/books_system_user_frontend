@@ -94,6 +94,7 @@
 
   .book-price {
     color: var(--primary-color);
+    font-family: var(--font-heading);
     font-size: 14px;
     font-weight: 600;
   }

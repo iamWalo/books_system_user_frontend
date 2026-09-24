@@ -373,7 +373,7 @@
 
     .promo-card img {
         width: 100%;
-        border-radius: 6px;
+        /* border-radius: 6px; */
         display: block;
     }
 
