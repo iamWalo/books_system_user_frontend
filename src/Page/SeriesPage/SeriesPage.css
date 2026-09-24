@@ -172,7 +172,7 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    text-align: left;
+    text-align: center;
 }
 
 .book-card-image-wrapper {

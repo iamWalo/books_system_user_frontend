@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './ProductPage.css';
-import Footer from '../../components/Footer/Footer'
-import Centure from '../../components/Centure/Centure'
-import Header from '../../components/Header/Header'
 // Import icons & images from your assets
 import mainBookImg from '../../assets/main_book.svg';
 import thumb1 from '../../assets/thumb1.svg';
@@ -23,17 +21,6 @@ const ProductPage = () => {
 
     return (
         <div className="product-page-container">
-            {/* Top Announcement Bar */}
-            <Centure />
-
-            {/* Navigation Header */}
-            <Header />
-
-            {/* Breadcrumbs */}
-            <nav className="breadcrumbs">
-                <span>🏠 Home</span> / <span>Categories</span> / <span>Children's Books</span>
-            </nav>
-
             {/* Product Display Section */}
             <section className="product-gallery-section">
                 <div className="main-image-wrapper">
@@ -208,23 +195,23 @@ const ProductPage = () => {
                 <h4>Continuous learning for growing minds</h4>
 
                 <div className="related-grid">
-                    <div className="book-card">
+                    <Link to="/product" className="book-card">
                         <div className="image-card-box">
                             <img src={relatedBook1} alt="The Whys Book Of Time" className="book-image" />
                         </div>
                         <h3 className="book-title">The Whys Book Of Time</h3>
                         <p className="book-subtitle">Covers the biological time and animal life</p>
                         <span className="book-price">$18.99</span>
-                    </div>
+                    </Link>
 
-                    <div className="book-card">
+                    <Link to="/product" className="book-card">
                         <div className="image-card-box">
                             <img src={relatedBook1} alt="The Whys Book Of Time" className="book-image" />
                         </div>
                         <h3 className="book-title">The Whys Book Of Time</h3>
                         <p className="book-subtitle">Covers the biological time and animal life</p>
                         <span className="book-price">$18.99</span>
-                    </div>
+                    </Link>
                 </div>
             </section>
 
@@ -234,28 +221,26 @@ const ProductPage = () => {
                 <h4>Handpicked picks for curious readers</h4>
 
                 <div className="related-grid">
-                    <div className="book-card">
+                    <Link to="/product" className="book-card">
                         <div className="image-card-box">
                             <img src={relatedBook1} alt="The Whys Book Of Time" className="book-image" />
                         </div>
                         <h3 className="book-title">The Whys Book Of Time</h3>
                         <p className="book-subtitle">Covers the biological time and animal life</p>
                         <span className="book-price">$18.99</span>
-                    </div>
+                    </Link>
 
-                    <div className="book-card">
+                    <Link to="/product" className="book-card">
                         <div className="image-card-box">
                             <img src={relatedBook2} alt="The Whys Book Of Time" className="book-image" />
                         </div>
                         <h3 className="book-title">The Whys Book Of Time</h3>
                         <p className="book-subtitle">Discover ancient history and timekeeping</p>
                         <span className="book-price">$18.99</span>
-                    </div>
+                    </Link>
                 </div>
             </section>
 
-            {/* Footer */}
-            <Footer />
         </div>
     );
 };

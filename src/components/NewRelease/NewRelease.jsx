@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './NewRelease.css';
 import newrelease_book_img from '../../assets/newrelease_book_img.svg';
 const NewRelease = () => {
@@ -38,7 +39,8 @@ const NewRelease = () => {
       {/* Grid Layout */}
       <div className="books-grid">
         {books.map((book, index) => (
-          <div
+          <Link
+            to="/product"
             key={book.id}
             className={`book-card ${index === 2 ? 'centered-card' : ''}`}
           >
@@ -48,7 +50,7 @@ const NewRelease = () => {
             <h3 className="book-title">{book.title}</h3>
             <p className="book-subtitle">{book.subtitle}</p>
             <span className="book-price">{book.price}</span>
-          </div>
+          </Link>
         ))}
       </div>
     </section>

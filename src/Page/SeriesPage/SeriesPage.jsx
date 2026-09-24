@@ -1,9 +1,6 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 import './SeriesPage.css';
-import Centure from '../../components/Centure/Centure';
-import Header from '../../components/Header/Header';
 import release_book from '../../assets/release_book_img.svg';
-import Footer from '../../components/Footer/Footer';
 
 const DEFAULT_SERIES_DATA = [
     {
@@ -54,13 +51,6 @@ const SeriesPage = ({ seriesData }) => {
 
     return (
         <div className="all-categories-page-root">
-            <Centure />
-            <Header />
-
-            <nav className="breadcrumbs">
-                <span>🏠 Home</span> / <span>Series</span> / <span>Children's Books</span>
-            </nav>
-
             <main className="all-categories-container">
                 {seriesToDisplay.map((series, idx) => {
                     const themeClass = series.theme || (
@@ -86,7 +76,7 @@ const SeriesPage = ({ seriesData }) => {
 
                             <div className="category-books-scroll-row">
                                 {series.books && series.books.map((book) => (
-                                    <div key={book._id || book.id} className="book-card">
+                                    <Link to="/product" key={book._id || book.id} className="book-card">
                                         <div className="book-card-image-wrapper">
                                             {book.image ? (
                                                 <img src={book.image} alt={book.name || book.title} />
@@ -98,7 +88,7 @@ const SeriesPage = ({ seriesData }) => {
                                             <h3 className="book-card-title">{book.name || book.title}</h3>
                                             <span className="book-card-price">{book.price || ''}</span>
                                         </div>
-                                    </div>
+                                    </Link>
                                 ))}
                             </div>
                         </section>
@@ -106,7 +96,6 @@ const SeriesPage = ({ seriesData }) => {
                 })}
             </main>
 
-            <Footer />
         </div>
     );
 };

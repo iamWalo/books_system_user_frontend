@@ -8,7 +8,7 @@ section.hero {
     align-items: center;
     justify-content: center;
     margin-top: 0;
-    background-image: url("../assets/hero_img.svg");
+    background-image: url("../../assets/hero_img.svg");
     background-size: cover;
     background-position: center;
 }

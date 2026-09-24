@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './ExploreCategories.css';
 import category_img from '../../assets/categories_img.svg';
 const categories = [
@@ -43,20 +44,24 @@ const ExploreCategories = () => {
         {categories.map((category) => (
           <div key={category.id} className="category-card">
             {/* Image Container */}
-            <div className="category-image-wrapper">
+            <Link to="/categories" className="category-image-wrapper">
               <img
                 src={category.image}
                 alt={category.title}
                 className="category-image"
               />
               <div className="category-overlay" />
-            </div>
+            </Link>
+            <Link to="/categories" className="category-image-wrapper">
+              <div className="category-content">
+                <h3 className="category-title">{category.title}</h3>
+                <p className="category-subtitle">{category.subtitle}</p>
+              </div>
+            </Link>
 
             {/* Text Overlay Content */}
-            <div className="category-content">
-              <h3 className="category-title">{category.title}</h3>
-              <p className="category-subtitle">{category.subtitle}</p>
-            </div>
+
+
           </div>
         ))}
       </div>

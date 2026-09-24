@@ -1,8 +1,5 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 import './AllCategoriesPage.css';
-import categoriesImage from '../../assets/categories_img.svg'
-import Centure from '../../components/Centure/Centure';
-import Header from '../../components/Header/Header';
 import release_book from '../../assets/release_book_img.svg'
 
 // Default mock data structured 100% identically to your design screenshot
@@ -57,18 +54,6 @@ const AllCategoriesPage = ({ categoriesData }) => {
 
     return (
         <div className="all-categories-page-root">
-            {/* Top Announcement Bar */}
-            <Centure />
-
-            {/* Navigation Header */}
-            <Header />
-
-            {/* Breadcrumbs */}
-            <nav className="breadcrumbs">
-                <span>🏠 Home</span> / <span>Categories</span> / <span>Children's Books</span>
-            </nav>
-
-
             {/* Categories Content Area */}
             <main className="all-categories-container">
                 {categoriesToDisplay.map((category, idx) => {
@@ -100,7 +85,7 @@ const AllCategoriesPage = ({ categoriesData }) => {
                             {/* Horizontal Scrollable Book Cards */}
                             <div className="category-books-scroll-row">
                                 {category.books && category.books.map((book) => (
-                                    <div key={book._id || book.id} className="book-card">
+                                    <Link to="/product" key={book._id || book.id} className="book-card">
                                         <div className="book-card-image-wrapper">
                                             {book.image ? (
                                                 <img src={book.image} alt={book.name || book.title} />
@@ -112,7 +97,7 @@ const AllCategoriesPage = ({ categoriesData }) => {
                                             <h3 className="book-card-title">{book.name || book.title}</h3>
                                             <span className="book-card-price">{book.price || ''}</span>
                                         </div>
-                                    </div>
+                                    </Link>
                                 ))}
                             </div>
                         </section>

@@ -53,6 +53,10 @@ body {
   color: var(--color-text-dark);
 }
 
+a.book-card {
+  text-decoration: none;
+}
+
 img.hero_line {
   position: relative;
   top: -10px;

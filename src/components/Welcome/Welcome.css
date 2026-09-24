@@ -31,6 +31,10 @@
 
   .welcome-title {
     font-size: 16px;
+    background-image: url('../../assets/brend_background_style.svg');
+    background-position: center;
+    background-size: cover;
+    background-color: var(--primary-color);
   }
 
   .welcome-owl-img {
@@ -43,6 +47,7 @@
   .welcome-card {
     position: relative;
     z-index: 133;
+    background-image: url('../../assets/brend_background_style.svg');
     background-position: center;
     background-size: cover;
     background-color: var(--primary-color);
