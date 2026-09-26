@@ -1,9 +1,14 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import './NewRelease.css';
 import newrelease_book_img from '../../assets/newrelease_book_img.svg';
-const NewRelease = () => {
-  const books = [
+const NewRelease = ({ products = [] }) => {
+  const books = products.length > 0 ? products.slice(0, 3).map((product) => ({
+    id: product._id,
+    title: product.name,
+    subtitle: product.serie?.name || '',
+    price: `${product.price}$`,
+    image: product.image || newrelease_book_img
+  })) : [
     {
       id: 1,
       title: "The Whys Book Of Time",
@@ -40,7 +45,7 @@ const NewRelease = () => {
       <div className="books-grid">
         {books.map((book, index) => (
           <Link
-            to="/product"
+            to={`/product?id=${book.id}`}
             key={book.id}
             className={`book-card ${index === 2 ? 'centered-card' : ''}`}
           >

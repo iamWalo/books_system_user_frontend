@@ -1,8 +1,7 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import './ExploreCategories.css';
 import category_img from '../../assets/categories_img.svg';
-const categories = [
+const defaultCategories = [
   {
     id: 1,
     title: 'THE NATURAL WORLD',
@@ -29,7 +28,14 @@ const categories = [
   },
 ];
 
-const ExploreCategories = () => {
+const ExploreCategories = ({ categories = [] }) => {
+  const categoriesToDisplay = categories.length > 0 ? categories.map((category) => ({
+    id: category._id,
+    title: category.name,
+    subtitle: category.description,
+    image: category.image || category_img
+  })) : defaultCategories;
+
   return (
     <section className="categories-container">
       {/* Header */}
@@ -41,7 +47,7 @@ const ExploreCategories = () => {
 
       {/* Stacked Cards List (1 card per row) */}
       <div className="categories-list">
-        {categories.map((category) => (
+        {categoriesToDisplay.map((category) => (
           <div key={category.id} className="category-card">
             {/* Image Container */}
             <Link to="/categories" className="category-image-wrapper">

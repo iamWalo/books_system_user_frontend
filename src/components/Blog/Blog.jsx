@@ -1,9 +1,10 @@
-import React, { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Blog.css';
 import blog1_img from '../../assets/blog_section_img.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { mediaUrl } from '../../api.js';
 
 const blogData = [
   {
@@ -38,7 +39,8 @@ const blogData = [
   }
 ];
 
-const Blogs = () => {
+const Blogs = ({ blogs = [] }) => {
+  const blogsToDisplay = blogs.length > 0 ? blogs.slice(0, 5) : blogData;
   const sliderRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -116,14 +118,14 @@ const Blogs = () => {
           onMouseUp={handleMouseUp}
           onMouseMove={handleMouseMove}
         >
-          {blogData.map((blog) => (
-            <div className="blog-card" key={blog.id}>
-              <img src={blog.image} alt={blog.title} className="blog-image" />
+          {blogsToDisplay.map((blog) => (
+            <div className="blog-card" key={blog._id || blog.id}>
+              <img src={mediaUrl(blog.bannerImage || blog.image) || blog1_img} alt={blog.title} className="blog-image" />
               <div className="blog-overlay" />
               <div className="blog-content">
                 <h3>{blog.title}</h3>
                 <p>{blog.description}</p>
-                <Link to="/blogs" className="blog-read-more">
+                <Link to={`/article?id=${blog._id || blog.id}`} className="blog-read-more">
                   <h4>Read More</h4>
                 </Link>
               </div>

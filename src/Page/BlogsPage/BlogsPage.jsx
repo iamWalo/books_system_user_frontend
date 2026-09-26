@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useMemo, useState } from 'react';
 import './BlogsPage.css';
-import blogImg from '../../assets/blog_section_img.svg'
+import { Link } from 'react-router-dom';
+import { mediaUrl } from '../../api.js';
 
 const MOCK_BLOG_ITEMS = [
     { id: '1', title: 'My kids Ask Weird Questions', date: 'Sep 21, 2026', image: '' },
@@ -13,7 +14,7 @@ const MOCK_BLOG_ITEMS = [
     { id: '8', title: 'My kids Ask Weird Questions', date: 'Sep 21, 2026', image: '' },
 ];
 
-export const BlogsPage = ({ blogsData }) => {
+export const BlogsPage = ({ blogsData, blogCategories = [] }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
@@ -21,6 +22,11 @@ export const BlogsPage = ({ blogsData }) => {
     const blogsToDisplay = (blogsData && blogsData.length > 0)
         ? blogsData
         : MOCK_BLOG_ITEMS;
+    const visibleBlogs = useMemo(() => blogsToDisplay.filter((blog) => {
+        const matchesSearch = !searchQuery || blog.title?.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesCategory = !selectedCategory || blog.category === selectedCategory;
+        return matchesSearch && matchesCategory;
+    }), [blogsToDisplay, searchQuery, selectedCategory]);
 
     return (
         <div className="blogs-page-root">
@@ -28,30 +34,15 @@ export const BlogsPage = ({ blogsData }) => {
             <main className="blogs-container">
                 {/* 2x2 Filter Buttons */}
                 <div className="blogs-category-filters">
-                    <button
-                        className={`filter-btn ${selectedCategory === 'Natural' ? 'active' : ''}`}
-                        onClick={() => setSelectedCategory(selectedCategory === 'Natural' ? '' : 'Natural')}
-                    >
-                        The Natural World
-                    </button>
-                    <button
-                        className={`filter-btn ${selectedCategory === 'Things' ? 'active' : ''}`}
-                        onClick={() => setSelectedCategory(selectedCategory === 'Things' ? '' : 'Things')}
-                    >
-                        How Things Work
-                    </button>
-                    <button
-                        className={`filter-btn ${selectedCategory === 'Mind' ? 'active' : ''}`}
-                        onClick={() => setSelectedCategory(selectedCategory === 'Mind' ? '' : 'Mind')}
-                    >
-                        Mind & Rest
-                    </button>
-                    <button
-                        className={`filter-btn ${selectedCategory === 'People' ? 'active' : ''}`}
-                        onClick={() => setSelectedCategory(selectedCategory === 'People' ? '' : 'People')}
-                    >
-                        People & Places
-                    </button>
+                    {blogCategories.length > 0 ? blogCategories.map((category) => (
+                        <button
+                            key={category._id}
+                            className={`filter-btn ${selectedCategory === category.name ? 'active' : ''}`}
+                            onClick={() => setSelectedCategory(selectedCategory === category.name ? '' : category.name)}
+                        >
+                            {category.name}
+                        </button>
+                    )) : null}
                 </div>
 
                 {/* Search Field */}
@@ -68,18 +59,18 @@ export const BlogsPage = ({ blogsData }) => {
 
                 {/* Blog Post List */}
                 <div className="blogs-list-feed">
-                    {blogsToDisplay.map((blog, idx) => (
-                        <article key={blog._id || blog.id || idx} className="blog-card">
-                            {blog.image && (
+                    {visibleBlogs.map((blog, idx) => (
+                        <Link to={`/article?id=${blog._id || blog.id}`} key={blog._id || blog.id || idx} className="blog-card">
+                            {blog.bannerImage && (
                                 <div className="blog-card-image-wrapper">
-                                    <img src={blog.image} alt={blog.title} />
+                                    <img src={mediaUrl(blog.bannerImage)} alt={blog.title} />
                                 </div>
                             )}
                             <div className="blog-card-content">
                                 <h2 className="blog-card-title">{blog.title}</h2>
-                                <span className="blog-card-date">{blog.date || 'Sep 21, 2026'}</span>
+                                <span className="blog-card-date">{blog.publishDate || blog.date || ''}</span>
                             </div>
-                        </article>
+                        </Link>
                     ))}
                 </div>
 

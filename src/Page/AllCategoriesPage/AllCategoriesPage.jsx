@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import './AllCategoriesPage.css';
 import release_book from '../../assets/release_book_img.svg'
+import { mediaUrl } from '../../api.js';
 
 // Default mock data structured 100% identically to your design screenshot
 const DEFAULT_CATEGORIES_DATA = [
@@ -85,10 +86,10 @@ const AllCategoriesPage = ({ categoriesData }) => {
                             {/* Horizontal Scrollable Book Cards */}
                             <div className="category-books-scroll-row">
                                 {category.books && category.books.map((book) => (
-                                    <Link to="/product" key={book._id || book.id} className="book-card">
+                                    <Link to={`/product?id=${book._id || book.id}`} key={book._id || book.id} className="book-card">
                                         <div className="book-card-image-wrapper">
                                             {book.image ? (
-                                                <img src={book.image} alt={book.name || book.title} />
+                                                <img src={mediaUrl(book.image)} alt={book.name || book.title} />
                                             ) : (
                                                 <img src={release_book} alt="" />
                                             )}

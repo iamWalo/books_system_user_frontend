@@ -1,4 +1,3 @@
-import React from 'react';
 import "./BestSelling.css"
 import bestselling from "../../assets/bestselling_img.svg"
 
@@ -24,7 +23,14 @@ const books = [
   }
 ];
 
-const BestSelling = () => {
+const BestSelling = ({ products = [] }) => {
+  const booksToDisplay = products.length > 0 ? products.slice(0, 3).map((product) => ({
+    id: product._id,
+    title: product.name,
+    subtitle: product.description || '',
+    image: product.image || bestselling
+  })) : books;
+
   return (
     <section className="bestselling-container">
       {/* Header */}
@@ -36,7 +42,7 @@ const BestSelling = () => {
 
       {/* Stacked Cards (1 per row) */}
       <div className="bestselling-list">
-        {books.map((book) => (
+        {booksToDisplay.map((book) => (
           <div key={book.id} className="bestselling-card">
             {/* Image Container */}
             <div className="bestselling-image-wrapper">
