@@ -22,7 +22,7 @@
 
 .subscribe-owl-img {
   object-fit: contain;
-  width: 300px;
+  width: 380px;
   height: auto;
   position: relative;
   top: -11px;
@@ -117,4 +117,8 @@
   /* Added: occupies full width of the parent flexbox */
   text-align: left;
   /* Added: aligns text to the left side */
+}
+
+.subscrib-svg-border {
+  color: var(--primary-color);
 }

@@ -1,4 +1,5 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
+const API_BASE_URL =
+    'https://lightsteelblue-llama-701240.hostingersite.com';
 
 const request = async (path) => {
     const response = await fetch(`${API_BASE_URL}${path}`);
@@ -9,7 +10,6 @@ const request = async (path) => {
 
     return response.json();
 };
-
 export const getProducts = () => request('/api/products');
 
 export const getCategories = async () => {

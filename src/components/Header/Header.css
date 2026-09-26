@@ -15,7 +15,7 @@
 
 .header-container .menu-icon-btn,
 .header-container .search-icon-btn {
-    color: #48215A;
+    color: var(--primary-color);
     font-size: 24px;
     display: flex;
     align-items: center;
@@ -26,4 +26,9 @@
     .header-container {
         padding: .6em 10px .1em 10px;
     }
+}
+
+.header-line-svg {
+    color: var(--primary-color);
+    z-index: 990;
 }

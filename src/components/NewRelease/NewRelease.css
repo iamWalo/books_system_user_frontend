@@ -72,7 +72,7 @@
   }
 
   .book-image {
-    width: 100%;
+    width: 117%;
     height: auto;
     object-fit: contain;
     filter: drop-shadow(0px 6px 10px rgba(0, 0, 0, 0.15));
@@ -88,7 +88,7 @@
 
   .book-subtitle {
     color: #7d7285;
-    font-size: 11px;
+    font-size: 12px;
     margin: 0 0 6px 0;
   }
 

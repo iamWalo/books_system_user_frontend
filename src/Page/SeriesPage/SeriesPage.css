@@ -34,7 +34,7 @@
 .all-categories-navbar .nav-search-btn {
     background: none;
     border: none;
-    font-size: var(--fs-large, 16px);
+    font-size: 16px;
     color: #3b1b59;
     cursor: pointer;
     padding: 4px;
@@ -42,7 +42,7 @@
 
 .all-categories-navbar .brand-logo {
     font-family: var(--font-heading, "Fraunces", serif);
-    font-size: var(--fs-large, 16px);
+    font-size: 16px;
     font-weight: 700;
     color: #3b1b59;
     letter-spacing: -0.3px;
@@ -100,7 +100,7 @@
 
 .category-banner-title {
     font-family: var(--font-heading, "Fraunces", serif);
-    font-size: var(--fs-large, 16px);
+    font-size: 16px;
     font-weight: 700;
     letter-spacing: 0.8px;
     text-transform: uppercase;
@@ -153,14 +153,6 @@
     display: none;
 }
 
-.book-card {
-    flex: 0 0 calc(33.333% - 11px);
-    min-width: 105px;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    text-align: center;
-}
 
 .book-card-image-wrapper {
     width: 100%;
@@ -187,20 +179,10 @@
     gap: 2px;
 }
 
-.book-card-title {
-    font-family: var(--font-heading, "Fraunces", serif);
-    font-size: var(--fs-large, 16px);
-    color: var(--color-text-dark, #2c2c2c);
-    margin: 0;
-    line-height: 1.2;
-    font-weight: 500;
-    text-align: left;
-    width: 100%;
-}
 
 span.book-card-price {
     font-family: var(--font-heading, "Fraunces", serif);
-    font-size: var(--fs-large, 16px);
+    font-size: 16px;
     color: var(--primary-color, #2c2c2c);
     font-weight: 600;
     text-align: right;

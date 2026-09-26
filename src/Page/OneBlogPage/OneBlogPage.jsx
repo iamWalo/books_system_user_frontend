@@ -66,6 +66,23 @@ export const OneBlogPage = ({ blogData, blogsData = [], categories = [], blogCat
     const blog = loadedBlog || blogData;
     const currentBlogId = blog?._id || blog?.id;
 
+    // Helper to format date into Day, Month, Year
+    const formatDate = (rawDate) => {
+        if (!rawDate) return '';
+        const parsedDate = new Date(rawDate);
+        if (isNaN(parsedDate.getTime())) return rawDate; // Return as-is if string date is not standard ISO
+
+        return parsedDate.toLocaleDateString('en-US', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
+        });
+    };
+
+    const author = blog?.author || 'WhyQuest Team';
+    const rawPublishDate = blog?.publishDate || blog?.createdAt || blog?.date;
+    const formattedDate = formatDate(rawPublishDate);
+
     const findCategoryImage = (blogItem) => {
         const categoryName = blogItem?.category || blogItem?.categoryName || blogItem?.categorie || blogItem?.blogCategory;
         if (!categoryName) return null;
@@ -122,23 +139,23 @@ export const OneBlogPage = ({ blogData, blogsData = [], categories = [], blogCat
         return sameCategoryBlogs.length > 0 ? sameCategoryBlogs.slice(0, 2) : DEFAULT_RELATED_BLOGS.slice(0, 2);
     }, [allBlogs, blog, currentBlogId]);
 
-    const handleSubscribe = (e) => {
-        e.preventDefault();
-    };
-
     return (
         <div className="one-blog-page-root">
             <main className="one-blog-container">
                 <header className="article-header">
-                    <h1 className="article-main-title">
+                    <h2 className="article-main-title">
                         {blog?.title || 'My kids Ask Weird Questions?'}
-                    </h1>
+                    </h2>
+
+                    {/* Author & Published Date meta line above cover image */}
+                    <div className="article-meta" style={{}}>
+                        {author && <span className="article-author">By {author}</span>}
+                        {author && formattedDate && <span className="article-meta-divider"> • </span>}
+                        {formattedDate && <span className="article-date">{formattedDate}</span>}
+                    </div>
+
                     <div className="article-featured-image-wrapper">
                         <img src={mediaUrl(articleImage)} alt={blog?.title || 'Blog cover'} />
-                        {/* {articleImage ? (
-                        ) : (
-                            <div className="article-image-placeholder" />
-                        )} */}
                     </div>
                 </header>
 

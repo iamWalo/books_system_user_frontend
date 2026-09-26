@@ -21,8 +21,8 @@
 
   /* Strict Allowed Font Sizes */
   --fs-hero: 64px;
-  --fs-large: 16px;
-  --fs-base: 14px;
+  --fs-large: 24px;
+  --fs-base: 16px;
   --fs-small: 12px;
 
   /* Spacing */
@@ -39,6 +39,12 @@
 }
 
 /* Locking the entire viewport */
+@media (min-width:480px) {
+  body {
+    display: none;
+  }
+}
+
 html,
 body {
   margin: 0;
@@ -75,8 +81,9 @@ h2 {
   font-family: var(--font-heading);
   font-size: var(--fs-large);
   /* 16px */
-  font-weight: 600;
+  font-weight: 700;
   margin: 0;
+  color: var(--primary-color);
 }
 
 h3 {

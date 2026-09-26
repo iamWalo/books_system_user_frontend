@@ -29,10 +29,12 @@ const CategoriePage = ({ categories = [] }) => {
           <h2>{apiCategory?.name || 'THE NATURAL WORLD'}</h2>
           <h4>{apiCategory?.description || 'Nature, earth & animals'}</h4>
         </div>
-        <div className="sort-dropdown">
-          <span>Sorted By</span>
-          <span className="dropdown-arrow">▼</span>
-        </div>
+        <select name="sozrt-dropdown" className='sort-dropdown' id="">
+          <option value="">Stored By</option>
+          <option value="">Newest</option>
+          <option value="">Popular</option>
+        </select>
+
       </div>
 
       {/* Main Books Grid (2 Columns) */}
@@ -51,9 +53,9 @@ const CategoriePage = ({ categories = [] }) => {
 
       {/* Action CTA Buttons */}
       <div className="cta-buttons-container">
-        <button className="cta-btn secondary-btn">
-          <img src={question_mark_icon} alt="" />
-          <span>Explore another Category</span>
+        <button className="cta-btn secondary-btn" >
+          {/* <img src={question_mark_icon} alt="" /> */}
+          <Link to={'/all-categories'} className='choose-another-category-link'><span>Choose another Category</span></Link>
         </button>
         <button className="cta-btn primary-btn">
           <img src={home_icon} alt="" />

@@ -1,6 +1,9 @@
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './ExploreCategories.css';
 import category_img from '../../assets/categories_img.svg';
+import { getCategories, mediaUrl } from '../../api';
+
 const defaultCategories = [
   {
     id: 1,
@@ -28,19 +31,50 @@ const defaultCategories = [
   },
 ];
 
-const ExploreCategories = ({ categories = [] }) => {
+const ExploreCategories = ({ categories: propsCategories = [] }) => {
+  const [categories, setCategories] = useState(propsCategories);
+  const [loading, setLoading] = useState(propsCategories.length === 0);
+
+  useEffect(() => {
+    if (propsCategories.length > 0) {
+      setCategories(propsCategories);
+      setLoading(false);
+      return;
+    }
+
+    const fetchCategories = async () => {
+      try {
+        setLoading(true);
+        const data = await getCategories();
+        setCategories(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error('Error fetching categories:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, [propsCategories]);
+
+  // Image helper function using api.js mediaUrl
+  const getCategoryImage = (category) => {
+    const rawImage = category?.image || category?.coverImage || category?.bannerImage;
+    if (!rawImage) return category_img;
+    return mediaUrl(rawImage);
+  };
+
   const categoriesToDisplay = categories.length > 0 ? categories.map((category) => ({
-    id: category._id,
-    title: category.name,
-    subtitle: category.description,
-    image: category.image || category_img
+    id: category._id || category.id,
+    title: category.name || category.title,
+    subtitle: category.description || category.subtitle || '',
+    // image: getCategoryImage(category)
   })) : defaultCategories;
 
   return (
     <section className="categories-container">
       {/* Header */}
       <div className="categories-header">
-        {/* <span className="diamond-icon"><img src="../assets/newrelease_logo.svg" alt="" /></span> */}
         <h2>Explore By Categories</h2>
         <h3>Pick a world to wander into; every one is full of whys</h3>
       </div>
@@ -55,6 +89,10 @@ const ExploreCategories = ({ categories = [] }) => {
                 src={category.image}
                 alt={category.title}
                 className="category-image"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = category_img;
+                }}
               />
               <div className="category-overlay" />
             </Link>
@@ -64,10 +102,6 @@ const ExploreCategories = ({ categories = [] }) => {
                 <p className="category-subtitle">{category.subtitle}</p>
               </div>
             </Link>
-
-            {/* Text Overlay Content */}
-
-
           </div>
         ))}
       </div>

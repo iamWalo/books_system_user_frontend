@@ -47,16 +47,18 @@
   flex-direction: column;
 }
 
+/* 
 .menu-nav li {
   border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
-}
+} */
 
 .menu-nav a {
   font-family: 'Fraunces', serif;
   font-weight: 600;
   font-size: 14px;
   color: #000000;
-  opacity: 0.66; /* 66% opacity for unselected */
+  opacity: 0.66;
+  /* 66% opacity for unselected */
   text-decoration: none;
   display: block;
   padding: 12px 0;
@@ -65,7 +67,8 @@
 
 /* Selected item state */
 .menu-nav a.active {
-  opacity: 1; /* 100% opacity for selected */
+  opacity: 1;
+  /* 100% opacity for selected */
 }
 
 /* CTA Button */
@@ -74,7 +77,8 @@
   background-color: var(--secondary-color);
   color: var(--primary-color);
   font-family: 'Manrope', sans-serif;
-  font-weight: 800; /* Extra bold */
+  font-weight: 800;
+  /* Extra bold */
   font-size: 14px;
   text-decoration: none;
   display: flex;
@@ -92,4 +96,8 @@
 
 .btn-icon {
   font-size: 14px;
+}
+
+.mobile-menu-svg {
+  height: 2px;
 }

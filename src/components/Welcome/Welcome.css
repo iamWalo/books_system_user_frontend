@@ -9,8 +9,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 480px;
-
+    /* max-width: 480px; */
     padding: 20px 16px;
     box-sizing: border-box;
   }
@@ -24,21 +23,17 @@
     display: flex;
     justify-content: center;
     margin-bottom: -35px;
-    /* Pulls the owl down over the purple card */
     bottom: -2em;
     left: -0.7em;
   }
 
   .welcome-title {
     font-size: 16px;
-    background-image: url('../../assets/brend_background_style.svg');
-    background-position: center;
-    background-size: cover;
-    /* background-color: var(--primary-color); */
+    margin: 0;
   }
 
   .welcome-owl-img {
-    width: 100%;
+    width: 290px;
     height: auto;
     object-fit: contain;
   }
@@ -51,10 +46,7 @@
     background-position: center;
     background-size: cover;
     background-color: var(--primary-color);
-    border-top: 2px solid var(--secondary-color);
-    border-bottom: 2px solid var(--secondary-color);
-    border-left: 2px dashed var(--secondary-color);
-    border-right: 2px dashed var(--secondary-color);
+    border: none;
     padding: 45px 20px 24px 20px;
     width: 100%;
     box-sizing: border-box;
@@ -63,15 +55,115 @@
     align-items: center;
   }
 
-  /* Yellow Bordered Badge Title */
+  /* Base styling for SVG border overlays (Card) */
+  .card-border-svg {
+    position: absolute;
+    color: var(--secondary-color);
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .card-border-svg svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .card-border-top,
+  .card-border-bottom {
+    left: -2px;
+    width: 101%;
+    height: 5px;
+  }
+
+  .card-border-top {
+    top: -3px;
+    /* display: none; */
+  }
+
+  .card-border-bottom {
+    bottom: -3px;
+  }
+
+  .card-border-left,
+  .card-border-right {
+    top: 0;
+    height: 100%;
+    width: 5px;
+  }
+
+  .card-border-left {
+    left: -2px;
+  }
+
+  .card-border-right {
+    right: -2px;
+  }
+
+  /* ========================================= */
+  /* Yellow Bordered Badge Title (UPDATED) */
+  /* ========================================= */
   .welcome-badge {
     position: absolute;
     top: -18px;
-    background-color: #431c53;
-    border: 2px dashed var(--secondary-color);
+    background-color: var(--primary-color);
+    background-image: url('../../assets/brend_background_style.svg');
+    background-size: cover;
+    background-position: center;
+    border: none;
+    /* Dashed border removed */
     padding: 6px 14px;
-    border-radius: 4px;
     white-space: nowrap;
+    z-index: 10;
+  }
+
+  /* Base styling for Badge SVG border overlays */
+  .badge-border-svg {
+    position: absolute;
+    pointer-events: none;
+    z-index: 11;
+  }
+
+  .welcome-card .badge-border-svg {
+    color: var(--secondary-color);
+  }
+
+  .badge-border-svg svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* Top & Bottom Badge Borders */
+  .welcome-card .badge-border-top,
+  .welcome-card .badge-border-bottom {
+    left: -1px;
+    width: calc(100% + 2px);
+    height: 3px;
+  }
+
+  .badge-border-top {
+    top: -1px;
+  }
+
+  .badge-border-bottom {
+    bottom: -1.5px;
+  }
+
+  /* Left & Right Vertical Badge Borders */
+  .badge-border-left,
+  .badge-border-right {
+    top: -1px;
+    height: calc(100% + 2px);
+    width: 3px;
+  }
+
+  .badge-border-left {
+    left: -2px;
+  }
+
+  .badge-border-right {
+    right: -2px;
   }
 
   .welcome-badge h2 {
@@ -89,7 +181,6 @@
 
   /* Action Link */
   .welcome-link {
-
     align-self: center;
     color: var(--secondary-color);
     font-weight: 700;

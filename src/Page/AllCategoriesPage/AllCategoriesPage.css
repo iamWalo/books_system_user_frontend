@@ -33,33 +33,8 @@
     border-bottom: 1px solid #e0e0e0;
 }
 
-.all-categories-navbar .nav-menu-btn,
-.all-categories-navbar .nav-search-btn {
-    background: none;
-    border: none;
-    font-size: var(--fs-large, 16px);
-    color: #3b1b59;
-    cursor: pointer;
-    padding: 4px;
-}
 
-.all-categories-navbar .brand-logo {
-    font-family: var(--font-heading, "Fraunces", serif);
-    font-size: var(--fs-large, 16px);
-    font-weight: 700;
-    color: #3b1b59;
-    letter-spacing: -0.3px;
-}
 
-/* Breadcrumb Bar */
-.all-categories-breadcrumb {
-    padding: 12px var(--spacing-md, 16px);
-    font-size: var(--fs-small, 12px);
-    color: #888888;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
 
 /* Main Content Wrapper */
 .all-categories-container {
@@ -131,7 +106,7 @@
 
 .category-banner-title {
     font-family: var(--font-heading, "Fraunces", serif);
-    font-size: var(--fs-large, 16px);
+    font-size: 16px;
     font-weight: 700;
     letter-spacing: 0.8px;
     text-transform: uppercase;
@@ -188,9 +163,9 @@
 }
 
 /* Individual Book Item Card */
-.book-card {
+.all-categories-page-root .book-card {
     flex: 0 0 calc(33.333% - 11px);
-    min-width: 105px;
+    min-width: 145px;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -235,7 +210,7 @@
 
 .book-card-title {
     font-family: var(--font-heading, "Fraunces", serif);
-    font-size: var(--fs-large, 16px);
+    font-size: var(14px);
     color: var(--color-text-dark, #2c2c2c);
     margin: 0;
     line-height: 1.2;
@@ -246,7 +221,7 @@
 
 span.book-card-price {
     font-family: var(--font-heading, "Fraunces", serif);
-    font-size: var(--fs-large, 16px);
+    font-size: 16px;
     color: var(--primary-color, #2c2c2c);
     font-weight: 600;
     text-align: right;
@@ -295,7 +270,7 @@ span.book-card-price {
 
 .footer-brand-text h3 {
     font-family: var(--font-heading, "Fraunces", serif);
-    font-size: var(--fs-large, 16px);
+    font-size: 16px;
     color: #ffffff;
     font-weight: 700;
     margin: 0;

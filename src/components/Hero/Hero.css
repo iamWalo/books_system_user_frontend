@@ -3,7 +3,7 @@
 section.hero {
     position: relative;
     max-width: 100%;
-    min-height: 347px;
+    min-height: 307px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -11,18 +11,8 @@ section.hero {
     background-image: url("../../assets/hero_img.svg");
     background-size: cover;
     background-position: center;
-}
-
-section.hero::before {
-    content: "";
-    position: absolute;
-    top: -2px;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: url("../assets/hero_line.svg") center / 100% 4px no-repeat;
-    transform: scaleY(1.5);
-    transform-origin: top center;
+    background-repeat: no-repeat;
+    /* border-top: 8px solid transparent; */
 }
 
 .hero .btn_container {
@@ -39,7 +29,6 @@ section.hero::before {
     width: 100%;
     height: 35px;
     margin: 5px 0;
-    border: none;
     border-radius: 2px;
     font-size: 14px;
     font-weight: 600;
@@ -48,75 +37,11 @@ section.hero::before {
     justify-content: center;
     gap: 8px;
     box-sizing: border-box;
-    overflow: hidden;
-}
-
-.hero .line {
-    position: absolute;
-    display: block;
-    pointer-events: none;
-    z-index: 2;
-}
-
-.hero .line.top {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background-image: url("../assets/hero_line.svg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100% 4px;
-    transform: scaleY(1.5);
-    transform-origin: top center;
-}
-
-.hero .line.bottom {
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background-image: url("../assets/hero_line.svg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100% 4px;
-    transform: scaleY(1.5);
-    transform-origin: bottom center;
-}
-
-.hero .line.left {
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background-image: url("../assets/hero_line.svg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: auto 100%;
-    transform: rotate(90deg) scaleY(1.5);
-    transform-origin: center;
-}
-
-.hero .line.right {
-    top: 0;
-    right: 0;
-    width: 4px;
-    height: 100%;
-    background-image: url("../assets/hero_line.svg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: auto 100%;
-    transform: rotate(90deg) scaleY(1.5);
-    transform-origin: center;
 }
 
 .hero .shop_btn {
     background-color: var(--secondary-color);
     color: var(--primary-color);
-}
-
-.hero .shop_btn .line {
-    opacity: 0.35;
 }
 
 .hero .explore_btn {
@@ -127,30 +52,126 @@ section.hero::before {
     color: #fff;
 }
 
-.hero .explore_btn .line {
-    opacity: 1;
-}
-
 .hero div.shop_btn img,
 .hero div.explore_btn img {
     width: 20px;
     height: 20px;
     object-fit: contain;
     flex-shrink: 0;
+    z-index: 1;
 }
 
 .hero div.shop_btn>span,
 .hero div.explore_btn>span {
     width: 130px;
     text-align: left;
+    z-index: 1;
 }
 
 .hero .explore_btn>span {
     margin-right: -13px;
 }
 
+/* Base style for button SVG borders */
+.hero-btn-border-svg {
+    position: absolute;
+    pointer-events: none;
+    color: currentColor;
+    z-index: 2;
+}
+
+/* Position top border */
+.hero-btn-border-top {
+    top: -3px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+}
+
+/* Position bottom border */
+.hero-btn-border-bottom {
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    transform: rotate(180deg);
+}
+
+/* Position left border */
+.hero-btn-border-left {
+    top: 0;
+    /* left: -0px; */
+    width: 4px;
+    height: 100%;
+}
+
+/* Position right border */
+.hero-btn-border-right {
+    top: 0;
+    right: -2px;
+    width: 4px;
+    height: 100%;
+    transform: scaleX(-1);
+}
+
 @media (max-width:480px) {
     .hero .btn_container {
         bottom: 8%;
     }
+}
+
+.hero-btn-border-svg {
+    position: absolute;
+    /* color: var(--secondary-color); */
+    pointer-events: none;
+    z-index: 5;
+}
+
+.shop_btn svg {
+    opacity: .3;
+}
+
+.shop_btn .hero-btn-border-svg {
+    color: var(--secondary-color);
+}
+
+div.explore_btn svg {
+    color: var(--primary-color);
+}
+
+.hero-btn-border-svg svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.hero-btn-border-top,
+.hero-btn-border-bottom {
+    left: -1px;
+    width: 101%;
+    height: 3px;
+}
+
+.hero-btn-border-top {
+    top: -1px;
+    /* display: none; */
+}
+
+.hero-btn-border-bottom {
+    bottom: -1px;
+}
+
+.hero div.hero-btn-border-left svg,
+.hero div.hero-btn-border-right svg {
+    top: 0;
+    height: 100%;
+    width: 3px;
+}
+
+.hero-btn-border-left {
+    left: -1.5px;
+}
+
+.hero-btn-border-right {
+    right: -2px;
 }
