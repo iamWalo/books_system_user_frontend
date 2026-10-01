@@ -1,47 +1,59 @@
-const API_BASE_URL =
-    'https://lightsteelblue-llama-701240.hostingersite.com';
+const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5000')
+    .replace(/\/+$/, '');
+const BACKEND_BASE_URL = (import.meta.env.VITE_BACKEND_URL || API_BASE_URL)
+    .replace(/\/+$/, '');
 
 const request = async (path) => {
     const response = await fetch(`${API_BASE_URL}${path}`);
+    const payload = await response.json().catch(() => null);
 
     if (!response.ok) {
-        throw new Error(`API request failed: ${response.status}`);
+        throw new Error(payload?.message || `API request failed: ${response.status}`);
     }
 
-    return response.json();
+    return payload;
 };
-export const getProducts = () => request('/api/products');
+
+export const getProducts = async () => {
+    const response = await request('/api/products');
+    return Array.isArray(response?.data) ? response.data : [];
+};
 
 export const getCategories = async () => {
     const response = await request('/api/categories');
-    return response.data || [];
+    return Array.isArray(response) ? response : [];
 };
 
 export const getSeries = async () => {
     const response = await request('/api/series');
-    return response.data || [];
+    return Array.isArray(response) ? response : [];
 };
 
 export const getBlogs = async (search = '') => {
     const query = search ? `?search=${encodeURIComponent(search)}` : '';
     const response = await request(`/api/blogs${query}`);
-    return response.data || [];
+    return Array.isArray(response?.data) ? response.data : [];
 };
 
 export const getBlogCategories = async () => {
     const response = await request('/api/blogs/categories');
-    return response.data || [];
+    return Array.isArray(response?.data) ? response.data : [];
 };
 
-export const getProduct = (id) => request(`/api/products/${id}`);
+export const getProduct = async (id) => {
+    const response = await request(`/api/products/${encodeURIComponent(id)}`);
+    return response?.data ?? null;
+};
 
 export const getBlog = async (id) => {
-    const response = await request(`/api/blogs/${id}`);
-    return response.data;
+    const response = await request(`/api/blogs/${encodeURIComponent(id)}`);
+    return response?.data ?? null;
 };
 
-export const mediaUrl = (path) => {
+export const getImageUrl = (path) => {
     if (!path) return '';
     if (/^(https?:|data:|blob:)/.test(path)) return path;
-    return `${API_BASE_URL}${path.startsWith('/') ? path : `/${path}`}`;
+    return `${BACKEND_BASE_URL}${path.startsWith('/') ? path : `/${path}`}`;
 };
+
+export const mediaUrl = getImageUrl;

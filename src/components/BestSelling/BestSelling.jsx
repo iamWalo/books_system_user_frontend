@@ -1,35 +1,17 @@
 import "./BestSelling.css"
 import bestselling from "../../assets/bestselling_img.svg"
-
-
-const books = [
-  {
-    id: 1,
-    title: "100,000 Whys for Curious Kids",
-    subtitle: "Encyclopedia full Illustrated",
-    image: bestselling
-  },
-  {
-    id: 2,
-    title: "The Whys Book of Time",
-    subtitle: "Encyclopedia full Illustrated",
-    image: bestselling
-  },
-  {
-    id: 3,
-    title: "The Whys Book of Sleep and Dreams",
-    subtitle: "Encyclopedia full Illustrated",
-    image: bestselling
-  }
-];
+import { getImageUrl } from "../../api.js"
 
 const BestSelling = ({ products = [] }) => {
-  const booksToDisplay = products.length > 0 ? products.slice(0, 3).map((product) => ({
-    id: product._id,
-    title: product.name,
-    subtitle: product.description || '',
-    image: product.image || bestselling
-  })) : books;
+  const booksToDisplay = products
+    .filter((product) => product.status === "Active" && product.categories?.includes("best_selling"))
+    .slice(0, 3)
+    .map((product) => ({
+      id: product._id || product.id,
+      title: product.name,
+      subtitle: product.subtitle || '',
+      image: getImageUrl(product.productImages?.[0]) || bestselling
+    }));
 
   return (
     <section className="bestselling-container">
@@ -42,7 +24,7 @@ const BestSelling = ({ products = [] }) => {
 
       {/* Stacked Cards (1 per row) */}
       <div className="bestselling-list">
-        {booksToDisplay.map((book) => (
+        {booksToDisplay.length ? booksToDisplay.map((book) => (
           <div key={book.id} className="bestselling-card">
             {/* Image Container */}
             <div className="bestselling-image-wrapper">
@@ -50,13 +32,18 @@ const BestSelling = ({ products = [] }) => {
                 src={book.image}
                 alt={book.title}
                 className="bestselling-image"
+                onError={(event) => {
+                  if (event.currentTarget.dataset.fallbackApplied) return;
+                  event.currentTarget.dataset.fallbackApplied = 'true';
+                  event.currentTarget.src = bestselling;
+                }}
               />
             </div>
             {/* Typography */}
             <h3 className="bestselling-title">{book.title}</h3>
             <p className="bestselling-subtitle">{book.subtitle}</p>
           </div>
-        ))}
+        )) : <p>No best sellers are available right now.</p>}
       </div>
     </section>
   );

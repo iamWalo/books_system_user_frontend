@@ -1,75 +1,21 @@
-import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './ExploreCategories.css';
 import category_img from '../../assets/categories_img.svg';
-import { getCategories, mediaUrl } from '../../api';
-
-const defaultCategories = [
-  {
-    id: 1,
-    title: 'THE NATURAL WORLD',
-    subtitle: 'Nature, earth & animals',
-    image: category_img
-  },
-  {
-    id: 2,
-    title: 'HOW THINGS WORK',
-    subtitle: 'Space, tech & the body',
-    image: category_img
-  },
-  {
-    id: 3,
-    title: 'MIND & REST',
-    subtitle: 'Sleep, Mental & Learning',
-    image: category_img
-  },
-  {
-    id: 4,
-    title: 'PEOPLE & PLACES',
-    subtitle: 'History, Traditions & words',
-    image: category_img
-  },
-];
+import { getImageUrl } from '../../api';
 
 const ExploreCategories = ({ categories: propsCategories = [] }) => {
-  const [categories, setCategories] = useState(propsCategories);
-  const [loading, setLoading] = useState(propsCategories.length === 0);
-
-  useEffect(() => {
-    if (propsCategories.length > 0) {
-      setCategories(propsCategories);
-      setLoading(false);
-      return;
-    }
-
-    const fetchCategories = async () => {
-      try {
-        setLoading(true);
-        const data = await getCategories();
-        setCategories(Array.isArray(data) ? data : []);
-      } catch (err) {
-        console.error('Error fetching categories:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCategories();
-  }, [propsCategories]);
-
-  // Image helper function using api.js mediaUrl
   const getCategoryImage = (category) => {
-    const rawImage = category?.image || category?.coverImage || category?.bannerImage;
+    const rawImage = category?.image;
     if (!rawImage) return category_img;
-    return mediaUrl(rawImage);
+    return getImageUrl(rawImage);
   };
 
-  const categoriesToDisplay = categories.length > 0 ? categories.map((category) => ({
+  const categoriesToDisplay = propsCategories.map((category) => ({
     id: category._id || category.id,
     title: category.name || category.title,
     subtitle: category.description || category.subtitle || '',
-    // image: getCategoryImage(category)
-  })) : defaultCategories;
+    image: getCategoryImage(category)
+  }));
 
   return (
     <section className="categories-container">
@@ -81,10 +27,10 @@ const ExploreCategories = ({ categories: propsCategories = [] }) => {
 
       {/* Stacked Cards List (1 card per row) */}
       <div className="categories-list">
-        {categoriesToDisplay.map((category) => (
+        {categoriesToDisplay.length ? categoriesToDisplay.map((category) => (
           <div key={category.id} className="category-card">
             {/* Image Container */}
-            <Link to="/categories" className="category-image-wrapper">
+            <Link to={`/categories?id=${category.id}`} state={{ categoryImage: category.image }} className="category-image-wrapper">
               <img
                 src={category.image}
                 alt={category.title}
@@ -96,14 +42,14 @@ const ExploreCategories = ({ categories: propsCategories = [] }) => {
               />
               <div className="category-overlay" />
             </Link>
-            <Link to="/categories" className="category-image-wrapper">
+            <Link to={`/categories?id=${category.id}`} state={{ categoryImage: category.image }} className="category-image-wrapper">
               <div className="category-content">
                 <h3 className="category-title">{category.title}</h3>
                 <p className="category-subtitle">{category.subtitle}</p>
               </div>
             </Link>
           </div>
-        ))}
+        )) : <p>No categories are available right now.</p>}
       </div>
     </section>
   );

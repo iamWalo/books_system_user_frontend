@@ -1,75 +1,22 @@
-import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './NewRelease.css';
 import newrelease_book_img from '../../assets/newrelease_book_img.svg';
-import { getProducts, mediaUrl } from '../../api';
+import { getImageUrl } from '../../api';
 
 const NewRelease = ({ products: propsProducts = [] }) => {
-  const [products, setProducts] = useState(propsProducts);
-  const [loading, setLoading] = useState(propsProducts.length === 0);
-
-  useEffect(() => {
-    if (propsProducts.length > 0) {
-      setProducts(propsProducts);
-      setLoading(false);
-      return;
-    }
-
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
-        const data = await getProducts();
-        setProducts(Array.isArray(data) ? data : []);
-      } catch (err) {
-        console.error('Error fetching products:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, [propsProducts]);
-
-  // Image helper function using api.js mediaUrl
   const getProductImage = (product) => {
-    const rawImage = product?.productImages?.[0] || product?.image;
+    const rawImage = product?.productImages?.[0];
     if (!rawImage) return newrelease_book_img;
-    return mediaUrl(rawImage);
+    return getImageUrl(rawImage);
   };
 
-  const defaultBooks = [
-    {
-      id: 1,
-      title: 'The Whys Book Of Time',
-      description: 'A thoughtful and engaging read for curious minds.',
-      price: '18.99$',
-      image: newrelease_book_img
-    },
-    {
-      id: 2,
-      title: 'The Whys Book Of Time',
-      description: 'A thoughtful and engaging read for curious minds.',
-      price: '18.99$',
-      image: newrelease_book_img
-    },
-    {
-      id: 3,
-      title: 'The Whys Book Of Time',
-      description: 'A thoughtful and engaging read for curious minds.',
-      price: '18.99$',
-      image: newrelease_book_img
-    }
-  ];
-
-  const books = products.length > 0 ? products.slice(0, 3).map((product) => ({
+  const books = propsProducts.filter((product) => product.status === 'Active').slice(0, 3).map((product) => ({
     id: product._id || product.id,
     title: product.name || product.title,
-    description: product.description
-      ? product.description.replace(/<[^>]*>?/gm, '')
-      : 'A thoughtful and engaging read for curious minds.',
+    subtitle: product.subtitle || 'A thoughtful and engaging read for curious minds.',
     price: `${product.price}$`,
     image: getProductImage(product)
-  })) : defaultBooks;
+  }));
 
   return (
     <section className="new-release-container">
@@ -81,7 +28,7 @@ const NewRelease = ({ products: propsProducts = [] }) => {
 
       {/* Grid Layout */}
       <div className="books-grid">
-        {books.map((book, index) => (
+        {books.length ? books.map((book, index) => (
           <Link
             to={`/product?id=${book.id}`}
             key={book.id}
@@ -99,10 +46,10 @@ const NewRelease = ({ products: propsProducts = [] }) => {
               />
             </div>
             <h3 className="book-title">{book.title}</h3>
-            <p className="book-subtitle">{book.description}</p>
+            <p className="book-subtitle">{book.subtitle}</p>
             <span className="book-price">{book.price}</span>
           </Link>
-        ))}
+        )) : <p>No new releases are available right now.</p>}
       </div>
     </section>
   );

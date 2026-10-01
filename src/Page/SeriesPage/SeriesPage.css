@@ -138,15 +138,8 @@
     font-weight: 500;
 }
 
-.category-books-scroll-row {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    padding: 20px 16px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+.series-page .category-books-scroll-row {
+    background-color: none;
 }
 
 .category-books-scroll-row::-webkit-scrollbar {

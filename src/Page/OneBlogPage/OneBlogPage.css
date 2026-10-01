@@ -62,7 +62,7 @@
 .one-blog-container {
     max-width: 480px;
     margin: 0 auto;
-    padding: 0 var(--spacing-md) var(--spacing-xl);
+    /* padding: 0 var(--spacing-md) var(--spacing-xl); */
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
@@ -72,6 +72,7 @@
 .article-header {
     text-align: center;
     margin-top: 40px;
+    padding: 0 var(--spacing-md) var(--spacing-xl);
 }
 
 .article-main-title {
@@ -117,6 +118,7 @@
     flex-direction: column;
     gap: 16px;
     line-height: 1.6;
+    padding: 0 var(--spacing-md) var(--spacing-xl);
 }
 
 .article-body-content p {
@@ -211,11 +213,13 @@
     grid-template-columns: 1fr 1fr;
     gap: 16px;
     margin-top: 8px;
+    padding: 0 var(--spacing-md) var(--spacing-xl);
 }
 
 .related-book-card {
     display: flex;
     flex-direction: column;
+    text-decoration: none;
 }
 
 .related-book-image-wrapper {
@@ -515,4 +519,10 @@
     margin-bottom: 1px;
     font-size: 12px;
     color: #666;
+}
+
+.also-read-heading {
+    text-align: center;
+    margin-bottom: 16px;
+    display: none;
 }

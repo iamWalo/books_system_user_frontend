@@ -1,5 +1,9 @@
 # React + Vite
 
+## API Configuration
+
+The frontend reads its API origin from `VITE_API_URL`. Copy `.env.example` to `.env.local` and set it to the origin where the Express API is running. The default is `http://localhost:5000`, matching the API's default port; use the port configured in `server/.env` when it differs. Restart Vite after changing the value.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

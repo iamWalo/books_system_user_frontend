@@ -1,35 +1,60 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import './CategoriePage.css';
-import { mediaUrl } from '../../api.js';
+import { getImageUrl } from '../../api.js';
+import category_img from '../../assets/categories_img.svg';
 import home_icon from '../../assets/categories_home_icon.svg'
-import question_mark_icon from '../../assets/categories_page_btn_questionmark_icon.svg'
 import productImg from '../../assets/newrelease_book_img.svg'
-const booksData = [
-  { id: 1, title: 'The Whys Book Of Time', subtitle: 'Serie: the books of whys with tick the owl', price: '18.99$', img: { productImg } },
-  { id: 2, title: 'The Whys Book Of Time', subtitle: 'Serie: the books of whys with tick the owl', price: '18.99$', img: { productImg } },
-  { id: 3, title: 'The Whys Book Of Time', subtitle: 'Serie: the books of whys with tick the owl', price: '18.99$', img: { productImg } },
-  { id: 4, title: 'The Whys Book Of Time', subtitle: 'Serie: the books of whys with tick the owl', price: '18.99$', img: { productImg } },
-];
-
 const CategoriePage = ({ categories = [] }) => {
-  const apiCategory = categories[0];
-  const booksToDisplay = apiCategory?.books?.length ? apiCategory.books.map((book) => ({
-    id: book._id,
-    title: book.name,
-    subtitle: '',
-    price: `${book.price}$`,
-    image: mediaUrl(book.image)
-  })) : booksData;
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const categoryId = searchParams.get('id');
+  const apiCategory = categories.find((category) => String(category._id || category.id) === String(categoryId))
+    || (!categoryId ? categories[0] : null);
+  const bannerImage = location.state?.categoryImage
+    || (apiCategory?.image ? getImageUrl(apiCategory.image) : category_img);
+  const booksToDisplay = (apiCategory?.books || [])
+    .filter((book) => book.status === 'Active')
+    .map((book) => ({
+      id: book._id,
+      title: book.name,
+      subtitle: '',
+      price: `${book.price}$`,
+      image: getImageUrl(book.productImages?.[0])
+    }));
+  const otherCategoryBooks = categories
+    .filter((category) => String(category._id || category.id) !== String(apiCategory?._id || apiCategory?.id))
+    .flatMap((category) => category.books || [])
+    .filter((book) => book.status === 'Active')
+    .slice(0, 2)
+    .map((book) => ({
+      id: book._id,
+      title: book.name,
+      price: `${book.price}$`,
+      image: getImageUrl(book.productImages?.[0]),
+    }));
 
   return (
     <div className="category-page-container">
       {/* Hero Category Banner */}
-      <div className="hero-banner">
-        <div className="hero-content">
-          <h2>{apiCategory?.name || 'THE NATURAL WORLD'}</h2>
-          <h4>{apiCategory?.description || 'Nature, earth & animals'}</h4>
+      <div
+        className="hero-banner"
+      >
+        <img
+          src={bannerImage}
+          alt=""
+          aria-hidden="true"
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+          onError={(event) => {
+            if (event.currentTarget.dataset.fallbackApplied) return;
+            event.currentTarget.dataset.fallbackApplied = 'true';
+            event.currentTarget.src = category_img;
+          }}
+        />
+        <div className="hero-content" style={{ position: 'relative', zIndex: 1 }}>
+          <h2>{apiCategory?.name || 'Category not found'}</h2>
+          {apiCategory?.description && <h4>{apiCategory.description}</h4>}
         </div>
-        <select name="sozrt-dropdown" className='sort-dropdown' id="">
+        <select name="sozrt-dropdown" className='sort-dropdown' id="" style={{ position: 'relative', zIndex: 1 }}>
           <option value="">Stored By</option>
           <option value="">Newest</option>
           <option value="">Popular</option>
@@ -39,16 +64,25 @@ const CategoriePage = ({ categories = [] }) => {
 
       {/* Main Books Grid (2 Columns) */}
       <main className="books-grid">
-        {booksToDisplay.map((book) => (
+        {booksToDisplay.length ? booksToDisplay.map((book) => (
           <Link to={`/product?id=${book.id}`} key={book.id} className="book-card">
             <div className="book-image-wrapper">
-              <img src={book.image || productImg} alt={book.title} className="book-image" />
+              <img
+                src={book.image || productImg}
+                alt={book.title}
+                className="book-image"
+                onError={(event) => {
+                  if (event.currentTarget.dataset.fallbackApplied) return;
+                  event.currentTarget.dataset.fallbackApplied = 'true';
+                  event.currentTarget.src = productImg;
+                }}
+              />
             </div>
             <h3>{book.title}</h3>
             <h4>{book.subtitle}</h4>
             <h3 className="book-price">{book.price}</h3>
           </Link>
-        ))}
+        )) : <p>No active books are available in this category.</p>}
       </main>
 
       {/* Action CTA Buttons */}
@@ -67,16 +101,26 @@ const CategoriePage = ({ categories = [] }) => {
       <section className="other-categories-section">
         <h2>From Other Categories</h2>
         <div className="books-grid">
-          {booksToDisplay.slice(0, 2).map((book) => (
+          {otherCategoryBooks.map((book) => (
             <Link to={`/product?id=${book.id}`} key={book.id} className="book-card">
               <div className="book-image-wrapper">
-                <img src={book.image || productImg} alt={book.title} className="book-image" />
+                <img
+                  src={book.image || productImg}
+                  alt={book.title}
+                  className="book-image"
+                  onError={(event) => {
+                    if (event.currentTarget.dataset.fallbackApplied) return;
+                    event.currentTarget.dataset.fallbackApplied = 'true';
+                    event.currentTarget.src = productImg;
+                  }}
+                />
               </div>
               <h3>{book.title}</h3>
               <h4>{book.subtitle}</h4>
               <h3 className="book-price">{book.price}</h3>
             </Link>
           ))}
+          {otherCategoryBooks.length === 0 && <p>No other category books are available.</p>}
         </div>
       </section>
 

@@ -1,113 +1,98 @@
 import { Link } from 'react-router-dom';
 import './AllCategoriesPage.css';
-import release_book from '../../assets/release_book_img.svg'
-import { mediaUrl } from '../../api.js';
+import release_book from '../../assets/release_book_img.svg';
+import category_img from '../../assets/categories_img.svg';
+import { getImageUrl } from '../../api.js';
 
-// Default mock data structured 100% identically to your design screenshot
-const DEFAULT_CATEGORIES_DATA = [
-    {
-        _id: 'cat-1',
-        name: 'THE NATURAL WORLD',
-        description: 'Nature, earth & animals',
-        theme: 'green-theme',
-        books: [
-            { id: 'b1', title: 'The Whys Book Of Time', price: '18.99$' },
-            { id: 'b2', title: 'The Whys Book Of Time', price: '18.99$' },
-            { id: 'b3', title: 'The Whys Book Of Time', price: '18.99$' },
-        ]
-    },
-    {
-        _id: 'cat-2',
-        name: 'HOW THINGS WORK',
-        description: 'Space, tech & the body',
-        theme: 'blue-theme',
-        books: [
-            { id: 'b4', title: 'The Whys Book Of Time', price: '13.99$' },
-            { id: 'b5', title: 'The Whys Book Of Time', price: '13.99$' },
-        ]
-    },
-    {
-        _id: 'cat-3',
-        name: 'MIND & REST',
-        description: 'Sleep, Mental & learning',
-        theme: 'pink-theme',
-        books: [
-            { id: 'b6', title: 'The Whys Book Of Time', price: '18.99$' },
-        ]
-    },
-    {
-        _id: 'cat-4',
-        name: 'PEOPLE & PLACES',
-        description: 'History, Traditions & words',
-        theme: 'rose-theme',
-        books: [
-            { id: 'b7', title: 'The Whys Book Of Time', price: '18.99$' },
-            { id: 'b8', title: 'The Whys Book Of Time', price: '18.99$' },
-            { id: 'b9', title: 'The Whys Book Of Time', price: '18.99$' },
-        ]
-    }
-];
-
-const AllCategoriesPage = ({ categoriesData }) => {
-    const categoriesToDisplay = (categoriesData && categoriesData.length > 0)
-        ? categoriesData
-        : DEFAULT_CATEGORIES_DATA;
-
+const AllCategoriesPage = ({ categoriesData = [] }) => {
     return (
         <div className="all-categories-page-root">
-            {/* Categories Content Area */}
             <main className="all-categories-container">
-                {categoriesToDisplay.map((category, idx) => {
-                    const themeClass = category.theme || (
-                        idx % 4 === 0 ? 'green-theme' :
-                            idx % 4 === 1 ? 'blue-theme' :
-                                idx % 4 === 2 ? 'pink-theme' : 'rose-theme'
-                    );
+                {categoriesData.length === 0 && <p>No categories are available right now.</p>}
+                {categoriesData.map((category, idx) => {
+                    // Extraction de la couleur depuis le schéma Mongoose
+                    const categoryColor = category.color || '#0F4000';
+
+                    // Construction de l'URL pour l'image de bannière issue de l'API
+                    const bannerImageUrl = category.image ? getImageUrl(category.image) : null;
+
+                    // Vérifier si la catégorie contient des livres
+                    const activeBooks = (category.books || []).filter((book) => book.status === 'Active');
+                    const hasBooks = activeBooks.length > 0;
 
                     return (
-                        <section key={category._id || idx} className={`category-section-wrapper ${themeClass}`}>
-                            {/* Category Hero Banner */}
+                        <section
+                            key={category._id || category.id || idx}
+                            className="category-section-wrapper"
+                            style={{
+                                '--category-color': categoryColor,
+                                backgroundColor: `color-mix(in srgb, ${categoryColor} 40%, transparent)`
+                            }}
+                        >
+                            {/* Category Hero Banner avec Image d'arrière-plan */}
                             <div
                                 className="category-banner"
-                            // style={{ backgroundImage: category.image ? `url(${category.image})` : { categoriesImage } }}
                             >
+                                <img
+                                    src={bannerImageUrl || category_img}
+                                    alt=""
+                                    aria-hidden="true"
+                                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.75)' }}
+                                    onError={(event) => {
+                                        if (event.currentTarget.dataset.fallbackApplied) return;
+                                        event.currentTarget.dataset.fallbackApplied = 'true';
+                                        event.currentTarget.src = category_img;
+                                    }}
+                                />
                                 <div className="category-banner-content">
                                     <div>
                                         <h2 className="category-banner-title">{category.name}</h2>
-                                        <p className="category-banner-subtitle">{category.description}</p>
+                                        {category.description && (
+                                            <p className="category-banner-subtitle">{category.description}</p>
+                                        )}
                                     </div>
                                     <div className="category-banner-count">
-                                        <span className="count-num">{category.books ? category.books.length : 0}</span>
+                                        <span className="count-num">{activeBooks.length}</span>
                                         <span className="count-label">Books</span>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Horizontal Scrollable Book Cards */}
-                            <div className="category-books-scroll-row">
-                                {category.books && category.books.map((book) => (
-                                    <Link to={`/product?id=${book._id || book.id}`} key={book._id || book.id} className="book-card">
-                                        <div className="book-card-image-wrapper">
-                                            {book.image ? (
-                                                <img src={mediaUrl(book.image)} alt={book.name || book.title} />
-                                            ) : (
-                                                <img src={release_book} alt="" />
-                                            )}
-                                        </div>
-                                        <div className="book-card-info">
-                                            <h3 className="book-card-title">{book.name || book.title}</h3>
-                                            <span className="book-card-price">{book.price || ''}</span>
-                                        </div>
-                                    </Link>
-                                ))}
-                            </div>
+                            {/* Conditional Rendering: N-bano l-scroll-row ghir ila kanu l-books */}
+                            {hasBooks && (
+                                <div className="category-books-scroll-row">
+                                    {activeBooks.map((book) => {
+                                        const bookId = book._id || book.id;
+                                        return (
+                                            <Link
+                                                to={`/product?id=${bookId}`}
+                                                key={bookId}
+                                                className="book-card"
+                                            >
+                                                <div className="book-card-image-wrapper">
+                                                    <img
+                                                        src={getImageUrl(book.productImages?.[0]) || release_book}
+                                                        alt={book.name || book.title || 'Book cover'}
+                                                        onError={(event) => {
+                                                            if (event.currentTarget.dataset.fallbackApplied) return;
+                                                            event.currentTarget.dataset.fallbackApplied = 'true';
+                                                            event.currentTarget.src = release_book;
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className="book-card-info">
+                                                    <h3 className="book-card-title">{book.name || book.title}</h3>
+                                                    <span className="book-card-price">{book.price ? `$${book.price}` : ''}</span>
+                                                </div>
+                                            </Link>
+                                        );
+                                    })}
+                                </div>
+                            )}
                         </section>
                     );
                 })}
             </main>
-
-            {/* Footer */}
-
         </div>
     );
 };

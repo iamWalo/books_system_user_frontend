@@ -36,7 +36,7 @@ const faqData = [
 
 const Faq = () => {
   // Set item 4 open by default to match screenshot
-  const [openId, setOpenId] = useState(4);
+  const [openId, setOpenId] = useState(1);
 
   const toggleFaq = (id) => {
     setOpenId(openId === id ? null : id);

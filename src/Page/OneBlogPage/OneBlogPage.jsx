@@ -2,68 +2,50 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import './OneBlogPage.css';
 import '../../components/Blog/Blog.css';
-import { getBlogs, mediaUrl } from '../../api.js';
+import blogImagePlaceholder from '../../assets/blog_section_img.svg';
+import bookImagePlaceholder from '../../assets/release_book_img.svg';
+import { getBlog, getImageUrl } from '../../api.js';
 import Subscribe from '../../components/Subscribe/Subscribe.jsx';
 
-const DEFAULT_RELATED_BLOGS = [
-    {
-        id: 'fallback-1',
-        _id: 'fallback-1',
-        title: 'Why Kids Ask “Why” So Much',
-        description: 'A field guide to the question age and the wonder behind every curious child.',
-        category: 'Curiosity',
-        bannerImage: null,
-    },
-    {
-        id: 'fallback-2',
-        _id: 'fallback-2',
-        title: 'How Big Questions Turn Into Big Learning',
-        description: 'Simple ways to turn everyday questions into deeper discovery and confidence.',
-        category: 'Curiosity',
-        bannerImage: null,
-    },
-];
+const handleImageError = (event, fallbackImage) => {
+    if (event.currentTarget.dataset.fallbackApplied) return;
+    event.currentTarget.dataset.fallbackApplied = 'true';
+    event.currentTarget.src = fallbackImage;
+};
 
-export const OneBlogPage = ({ blogData, blogsData = [], categories = [], blogCategories = [] }) => {
+export const OneBlogPage = ({ blogData, blogsData = [], products = [] }) => {
     const [searchParams] = useSearchParams();
-    const [loadedBlog, setLoadedBlog] = useState(blogData);
-    const [allBlogs, setAllBlogs] = useState(blogsData.length > 0 ? blogsData : DEFAULT_RELATED_BLOGS);
+    const blogId = searchParams.get('id');
+    const [fetchedBlog, setFetchedBlog] = useState(null);
+    const availableBlog = [blogData, ...blogsData].find((item) =>
+        String(item?._id || item?.id) === String(blogId) && item.status === 'Published'
+    );
 
     useEffect(() => {
-        const blogId = searchParams.get('id');
-        if (blogData && blogId) {
-            setLoadedBlog(blogData);
-            return;
-        }
+        if (!blogId || availableBlog) return;
 
-        if (!blogId) return;
-
-        getBlogs()
-            .then((blogs) => {
-                const foundBlog = blogs.find((blogItem) => String(blogItem?._id || blogItem?.id) === String(blogId));
-                setLoadedBlog(foundBlog || null);
+        let isCurrent = true;
+        getBlog(blogId)
+            .then((item) => {
+                if (!isCurrent) return;
+                if (!item || item.status !== 'Published') throw new Error('Article not found.');
+                setFetchedBlog({ id: blogId, blog: item });
             })
             .catch((error) => {
+                if (!isCurrent) return;
                 console.error('Unable to load blog', error);
-                setLoadedBlog(null);
+                setFetchedBlog({ id: blogId, error: error.message || 'Unable to load this article.' });
             });
-    }, [blogData, searchParams]);
 
-    useEffect(() => {
-        if (blogsData && blogsData.length > 0) {
-            setAllBlogs(blogsData);
-            return;
-        }
+        return () => {
+            isCurrent = false;
+        };
+    }, [availableBlog, blogId]);
 
-        getBlogs()
-            .then((blogs) => setAllBlogs(blogs.length > 0 ? blogs : DEFAULT_RELATED_BLOGS))
-            .catch((error) => {
-                console.error('Unable to load related blogs', error);
-                setAllBlogs(DEFAULT_RELATED_BLOGS);
-            });
-    }, [blogsData]);
-
-    const blog = loadedBlog || blogData;
+    const currentRequest = fetchedBlog?.id === blogId ? fetchedBlog : null;
+    const blog = availableBlog || currentRequest?.blog;
+    const blogLoading = Boolean(blogId && !availableBlog && !currentRequest);
+    const blogError = currentRequest?.error || '';
     const currentBlogId = blog?._id || blog?.id;
 
     // Helper to format date into Day, Month, Year
@@ -79,72 +61,44 @@ export const OneBlogPage = ({ blogData, blogsData = [], categories = [], blogCat
         });
     };
 
-    const author = blog?.author || 'WhyQuest Team';
-    const rawPublishDate = blog?.publishDate || blog?.createdAt || blog?.date;
+    const author = blog?.author;
+    const rawPublishDate = blog?.publishDate;
     const formattedDate = formatDate(rawPublishDate);
 
-    const findCategoryImage = (blogItem) => {
-        const categoryName = blogItem?.category || blogItem?.categoryName || blogItem?.categorie || blogItem?.blogCategory;
-        if (!categoryName) return null;
-
-        const match = [...categories, ...blogCategories].find((category) => {
-            const categoryValues = [
-                category?.name,
-                category?.title,
-                category?.slug,
-                category?.label,
-            ].filter(Boolean);
-
-            return categoryValues.some((value) => String(value).toLowerCase() === String(categoryName).toLowerCase());
-        });
-
-        return match?.image || match?.bannerImage || null;
-    };
-
-    const articleImage = blog?.bannerImage || blog?.image || blog?.coverImage || blog?.featuredImage || findCategoryImage(blog);
+    const articleImage = blog?.bannerImage;
 
     const relatedBlogs = useMemo(() => {
-        if (!blog || !allBlogs.length) return DEFAULT_RELATED_BLOGS.slice(0, 2);
-
-        const categoryValues = [
-            blog.category,
-            blog.categoryName,
-            blog.categorie,
-            blog.blogCategory,
-            blog.category?.name,
-            blog.category?.slug,
-        ].filter(Boolean);
-
-        const sameCategoryBlogs = allBlogs.filter((item) => {
+        if (!blog || !blogsData.length) return [];
+        return blogsData.filter((item) => {
             const itemId = item?._id || item?.id;
-            if (itemId && currentBlogId && itemId === currentBlogId) return false;
+            return item.status === 'Published'
+                && String(itemId) !== String(currentBlogId)
+                && item.category === blog.category;
+        }).slice(0, 2);
+    }, [blogsData, blog, currentBlogId]);
 
-            const itemCategoryValues = [
-                item.category,
-                item.categoryName,
-                item.categorie,
-                item.blogCategory,
-                item.category?.name,
-                item.category?.slug,
-            ].filter(Boolean);
+    const storyBooks = products
+        .filter((item) => item.status === 'Active' && item.categories?.includes('story_book'))
+        .slice(0, 2);
 
-            return categoryValues.some((category) =>
-                itemCategoryValues.some((itemCategory) => {
-                    if (!category || !itemCategory) return false;
-                    return String(itemCategory) === String(category);
-                })
-            );
-        });
-
-        return sameCategoryBlogs.length > 0 ? sameCategoryBlogs.slice(0, 2) : DEFAULT_RELATED_BLOGS.slice(0, 2);
-    }, [allBlogs, blog, currentBlogId]);
+    if (blogLoading || !blog) {
+        return (
+            <div className="one-blog-page-root">
+                <main className="one-blog-container">
+                    <p role={blogError ? 'alert' : 'status'}>
+                        {blogLoading ? 'Loading article...' : blogError || 'Article not found.'}
+                    </p>
+                </main>
+            </div>
+        );
+    }
 
     return (
         <div className="one-blog-page-root">
             <main className="one-blog-container">
                 <header className="article-header">
                     <h2 className="article-main-title">
-                        {blog?.title || 'My kids Ask Weird Questions?'}
+                        {blog.title}
                     </h2>
 
                     {/* Author & Published Date meta line above cover image */}
@@ -155,46 +109,44 @@ export const OneBlogPage = ({ blogData, blogsData = [], categories = [], blogCat
                     </div>
 
                     <div className="article-featured-image-wrapper">
-                        <img src={mediaUrl(articleImage)} alt={blog?.title || 'Blog cover'} />
+                        <img
+                            src={getImageUrl(articleImage) || blogImagePlaceholder}
+                            alt={blog.title}
+                            onError={(event) => handleImageError(event, blogImagePlaceholder)}
+                        />
                     </div>
                 </header>
 
                 <article className="article-body-content">
-                    {blog?.body ? <div dangerouslySetInnerHTML={{ __html: blog.body }} /> : (
-                        <>
-                            <p>Children are naturally curious explorers, constantly asking questions that can make us laugh, pause, or ponder the deepest mysteries of the universe.</p>
-                            <p>When your child asks a surprising or unusual question, it opens up a wonderful window into how their mind processes and tries to make sense of the world around them.</p>
-                        </>
-                    )}
+                    <div dangerouslySetInnerHTML={{ __html: blog.body }} />
                 </article>
 
-                <div className="article-mascot-wrapper">
-                    <div className="article-mascot-img">🦔</div>
-                </div>
+
 
                 <Subscribe />
 
-                <section className="related-books-grid">
-                    <div className="related-book-card">
-                        <div className="related-book-image-wrapper">
-                            <div className="article-image-placeholder" />
+                {storyBooks.length > 0 && (
+                    <section>
+                        <h2 className="also-read-heading">Story Books</h2>
+                        <div className="related-books-grid">
+                            {storyBooks.map((product) => (
+                                <Link to={`/product?id=${product._id || product.id}`} key={product._id || product.id} className="related-book-card">
+                                    <div className="related-book-image-wrapper">
+                                        <img
+                                            src={getImageUrl(product.productImages?.[0]) || bookImagePlaceholder}
+                                            alt={product.name}
+                                            onError={(event) => handleImageError(event, bookImagePlaceholder)}
+                                        />
+                                    </div>
+                                    <div className="related-book-info">
+                                        <h3 className="related-book-title">{product.name}</h3>
+                                        <span className="related-book-price">${product.price}</span>
+                                    </div>
+                                </Link>
+                            ))}
                         </div>
-                        <div className="related-book-info">
-                            <h3 className="related-book-title">100,000 Whys</h3>
-                            <span className="related-book-price">18.99$</span>
-                        </div>
-                    </div>
-
-                    <div className="related-book-card">
-                        <div className="related-book-image-wrapper">
-                            <div className="article-image-placeholder" />
-                        </div>
-                        <div className="related-book-info">
-                            <h3 className="related-book-title">The Whys Book Of Time</h3>
-                            <span className="related-book-price">18.99$</span>
-                        </div>
-                    </div>
-                </section>
+                    </section>
+                )}
 
                 {relatedBlogs.length > 0 && (
                     <section className="also-read-section">
@@ -202,17 +154,16 @@ export const OneBlogPage = ({ blogData, blogsData = [], categories = [], blogCat
                         <div className="also-read-grid">
                             {relatedBlogs.map((relatedBlog) => {
                                 const relatedId = relatedBlog._id || relatedBlog.id;
-                                const relatedImage = relatedBlog.bannerImage || relatedBlog.image || relatedBlog.coverImage || relatedBlog.featuredImage || findCategoryImage(relatedBlog);
+                                const relatedImage = relatedBlog.bannerImage;
 
                                 return (
                                     <Link to={`/article?id=${relatedId}`} key={relatedId} className="also-read-card blog-card">
-                                        {relatedImage ? (
-                                            <img
-                                                src={mediaUrl(relatedImage)}
-                                                alt={relatedBlog.title}
-                                                className="blog-image"
-                                            />
-                                        ) : null}
+                                        <img
+                                            src={getImageUrl(relatedImage) || blogImagePlaceholder}
+                                            alt={relatedBlog.title}
+                                            className="blog-image"
+                                            onError={(event) => handleImageError(event, blogImagePlaceholder)}
+                                        />
                                         <div className="blog-overlay" />
                                         <div className="blog-content">
                                             <h3 className="blog-title">{relatedBlog.title}</h3>
